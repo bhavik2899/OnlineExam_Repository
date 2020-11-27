@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md shadow navbar-light bg-light mb-3 p-3 navShadow" id="mNavbar">
+        @Html.ActionLink("OnlineExam", "QuestionList", "Question", new { area = "" }, new { @class = "navbar-brand " })
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav w-100">
+                <li class="nav-item">
+                    @Html.ActionLink("Question", "QuestionList", "Question", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Paper", "PaperList", "Paper", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Test-Conduct", "TestList", "Test", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Result-Report", "ResultReport", "Result", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Test-Solution", "TestSolution", "Result", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Student-Solution", "StudentSolution2", "Result", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Fee-Structure", "FeeStructureList", "FeeStructure", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("StudentFeeSchedule", "StudentFeeSchedule", "StudentFeeSchedule", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("StudentFeeCollection", "StudentFeeCollection", "StudentFeeSchedule", new { area = "" }, new { @class = "nav-link navLinkHover px-0 mx-2" })
+                </li>
+            </ul>
+            @*@if (Session["UserName"] != null)
+            {
+                <p class="mt-2">Welcome&nbsp;<strong>@Session["UserName"]</strong></p>
+                <div class="nav-item">
+                    @Html.ActionLink("Log Out", "Login", "Employee", new { @class = "btn loginBtn btn-danger ml-2 " })
+                </div>
+            }
+            else
+            {
+                <div class="nav-item">
+                    @Html.ActionLink("Login", "Login", "Employee", new { @class = "btn loginBtn btn-danger ml-2 px-3 py-1" })
+                </div>
+            }*@
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <footer class="mt-5">
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryUi")
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+﻿body {
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.page-title {
+    color: #dc3545;
+    font-weight:bold !important;
+}
+
+.inner-Shadow {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+table{
+    text-align:center;
+}
+
+.ui-datepicker-prev span {
+    background-image: url("images/Prev_Arrow.png") !important;
+    background-position: 0px 0px !important;
+}
+
+.ui-datepicker-next span {
+    background-image: url("images/Next_Arrow.png") !important;
+    background-position: 0px 0px !important;
+}
+
+.collapsed .Blue_Arrow {
+    transform: rotate(180deg);
+}
+
+.loginBtn{
+    float:right;
+}
+
+.box-Shadow {
+    box-shadow: 0px 0px 18px -6px rgba(71,58,58,1);
+}
+
+#showOption{
+    display:block;
+}
+
+.greenBg {
+    background-color: #82d999 !important;
+}
+
+.redBg {
+    background-color: #ff8787;
+}
+
+.readonly{
+    pointer-events:none;
+}
+
+.navShadow {
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);}
+
+.navLinkHover {
+    position: relative;
+}
+
+    .navLinkHover:hover {
+        color:#000 !important
+    }
+
+    .navLinkHover:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #007bff;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out 0s;
+    }
+
+.navLinkHover:hover:before {
+    visibility: visible;
+    width: 100%;
+}
+
+.bold{
+    font-weight:bold;
+}
+
+    /*-------Media Queries------*/
+    @media screen and (max-width: 768px) {
+        #navbarNav .nav-link{
+        text-align:center;
+    }
+}

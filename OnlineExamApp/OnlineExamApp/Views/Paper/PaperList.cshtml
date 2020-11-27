@@ -1,0 +1,67 @@
+﻿@model IEnumerable<OnlineExamApp.Models.PaperModel>
+@{
+	ViewBag.Title = "PaperList";
+}
+
+<div class="d-flex justify-content-between mb-2">
+	<h2 class="page-title">Paper List</h2>
+	@Html.ActionLink("Add Paper", "AddEditPaper", "Paper", new { @class = "btn btn-danger mt-2 px-2 py-1 h-50" })
+</div>
+
+<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+	<thead>
+		<tr>
+			<th class="th">
+				Sr.
+			</th>
+			<th class="th">
+				@Html.Label("Title")
+			</th>
+			<th class="th">
+				@Html.Label("Start Time")
+			</th>
+			<th class="th">
+				@Html.Label("End Time")
+			</th>
+			<th class="th">
+				@Html.Label("Exam Date")
+			</th>
+			<th class="th">
+				@Html.Label("No Of Question")
+			</th>
+			<th class="th">
+				@Html.Label("Total Marks")
+			</th>
+		</tr>
+	</thead>
+	@{ int count = 1; }
+	@foreach (var paper in Model)
+	{
+		<tr>
+			<td>@count</td>
+			<td>
+				@Html.DisplayFor(m => paper.Title)
+			</td>
+			<td>
+				@Html.DisplayFor(m => paper.StartTime)
+			</td>
+			<td>
+				@Html.DisplayFor(m => paper.EndTime)
+			</td>
+			<td>
+				@Html.DisplayFor(m => paper.ExamDate)
+			</td>
+			<td>
+				@Html.DisplayFor(m => paper.NoOfQuestion)
+			</td>
+			<td>
+				@Html.DisplayFor(m => paper.TotalMarks)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "AddEditPaper", new { @id = paper.PaperId }, new { @class = "edit btn btn-secondary px-2 py-0 mr-2" })
+				@Html.ActionLink("Delete", "DeletePaper", new { @id = paper.PaperId }, new { @class = "delete btn btn-secondary px-2 py-0 ", onclick = "return confirm('Are you sure you wish to delete this Paper Details?');" })
+			</td>
+		</tr>
+		count++;
+	}
+</table>

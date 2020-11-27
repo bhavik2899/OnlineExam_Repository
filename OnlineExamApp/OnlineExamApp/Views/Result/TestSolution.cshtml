@@ -1,0 +1,54 @@
+﻿@model OnlineExamApp.Models.TestSolutionModel
+@{
+	ViewBag.Title = "TestSolution";
+}
+
+<h2 class="page-title">TestSolution</h2>
+
+<div class="row inner-Shadow p-3 my-2">
+	<div class="col-sm-12">
+		<div class="form-inline d-flex justify-content-center">
+			@Html.LabelFor(m => m.PaperId)
+			@Html.DropDownListFor(m => m.PaperId, new SelectList(Model.TestList, "Value", "Text"), "Please Select", new { @class = "form-control w-50 ml-3" })
+			@Html.ValidationMessageFor(m => m.PaperId, "", new { @class = "text-danger" })
+		</div>
+		@Html.HiddenFor(m => m.PaperId)
+	</div>
+</div>
+@try{
+for (int i = 0; i < Model.Questions.Count; i++)
+{
+	@Html.HiddenFor(m => Model.Questions[i].PK_QueMasterId)
+
+	<p class="font-weight-bold"><span>@(i + 1)</span>) @Html.DisplayFor(m => Model.Questions[i].Title)</p>
+
+	for (int j = 0; j < Model.Questions[i].qom.Count; j++)
+	{
+		@Html.HiddenFor(m => Model.Questions[i].qom[j].PK_QueOptionMasterId)
+
+
+		<p class='p-1 m-1 rounded @(Convert.ToBoolean(Model.Questions[i].qom[j].IsCorrect) == true ? "greenBg" : "") '>
+
+			@if (Model.Questions[i].IsMultichoice == true)
+			{
+				@Html.CheckBoxFor(m => Model.Questions[i].qom[j].IsSelected)
+			}
+			else
+			{
+				@Html.RadioButtonFor(m => Model.Questions[i].qom[j].IsSelected, true)
+			}
+
+			@Html.DisplayFor(m => Model.Questions[i].qom[j].OptionTitle)
+		</p>
+	}
+	<hr />
+}
+}
+catch { }
+<script>
+	$("#PaperId").change(function () {
+		var paperId = $("#PaperId").val();
+		var url = "@Url.Action("TestSolution", "Result",  new { @id = "paperId" })";
+		window.location.href = url.replace('paperId', paperId);
+	});
+</script>

@@ -1,0 +1,100 @@
+﻿@model OnlineExamApp.Models.PaperModel
+@{
+	ViewBag.Title = "AddEditPaper";
+}
+
+<div class="row">
+	<div class="col">
+		<h2 class="page-title">Add/ Edit Paper</h2>
+	</div>
+</div>
+<hr />
+@using (Html.BeginForm("AddEditPaper", "Paper", FormMethod.Post))
+{
+	<div class="row">
+		<div class="col-sm-6">
+			<h3 class="page-title">Paper Details</h3>
+
+			@Html.HiddenFor(x => x.PaperId)
+			<div class="form-group">
+				@Html.LabelFor(m => m.Title)
+				@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Details)
+				@Html.TextAreaFor(m => m.Details, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Details, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.ExamDate)
+				@Html.TextBoxFor(m => m.ExamDate, new { @class = "form-control",autocomplete="off" })
+				@Html.ValidationMessageFor(m => m.ExamDate, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.StartTime)
+				@Html.TextBoxFor(m => m.StartTime, new { type = "time", @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.EndTime)
+				@Html.TextBoxFor(m => m.EndTime, new { type = "time",@class = "form-control" })
+				@Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.TotalMarks)
+				@Html.TextBoxFor(m => m.TotalMarks, new { @type = "number", @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.TotalMarks, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.PassingMarks)
+				@Html.TextBoxFor(m => m.PassingMarks, new { @type = "number", @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.PassingMarks, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="col-sm-6">
+			<h3 class="page-title">Questions</h3>
+			<div class="row">
+				<div class="col">
+					@Html.Label("IsSelect")
+				</div>
+				<div class="col">
+					@Html.Label("Question Title")
+				</div>
+				<div class="col">
+					@Html.Label("Order No")
+				</div>
+			</div>
+			<hr />
+			@for (var i = 0; i < Model.QuestionList.Count; i++)
+			{
+				<div class="row mt-1">
+					<div class="col">
+						@Html.CheckBoxFor(m => m.QuestionList[i].IsSelected, new { @class = "mt-2 ml-2" })
+					</div>
+					<div class="col">
+						@Html.DisplayFor(m => m.QuestionList[i].Title)
+						@Html.HiddenFor(m=>m.QuestionList[i].QueId)
+					</div>
+					<div class="col">
+						@Html.TextBoxFor(m => m.QuestionList[i].OrderNo, new { @type = "number", @class = "form-control" })
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
+	<div class="row d-flex justify-content-center mt-3">
+		<button type="submit" id="submitBtn" class="btn btn-danger">Submit</button>
+	</div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#ExamDate").datepicker({
+			dateFormat: 'dd-mm-yy',
+			minDate: 0
+        });
+    });
+</script>

@@ -1,0 +1,119 @@
+﻿@model OnlineExamApp.Models.ResultModel
+@{
+	ViewBag.Title = "ResultReport";
+}
+
+<h2 class="page-title">Result</h2>
+
+@using (Html.BeginForm("ResultReport", "Result", FormMethod.Post, new { @id = "formSubmit" }))
+{
+	<div class="row inner-Shadow p-3 my-3">
+		<div class="col-sm-6">
+			<div>
+				@Html.LabelFor(m => m.PaperDate)
+				@Html.TextBoxFor(m => m.PaperDate, new { @class = "form-control w-100", @placeholder = "Enter Date" })
+				@Html.ValidationMessageFor(m => m.PaperDate, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div>
+				@Html.LabelFor(m => m.PaperId)
+				<select id="TestId" class="form-control">
+					<option value="-1">Please Select Test.</option>
+				</select>
+				@Html.ValidationMessageFor(m => m.PaperId, "", new { @class = "text-danger" })
+			</div>
+			@Html.HiddenFor(m => m.PaperId)
+		</div>
+	</div>
+}
+
+<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+	<thead>
+		<tr>
+			<th class="th">
+				Sr.
+			</th>
+			<th class="th">
+				@Html.Label("UserName")
+			</th>
+			<th class="th">
+				@Html.Label("Total Marks")
+			</th>
+			<th class="th">
+				@Html.Label("Passing Marks")
+			</th>
+			<th class="th">
+				@Html.Label("Result Marks")
+			</th>
+			<th class="th">
+				@Html.Label("Result")
+			</th>
+		</tr>
+	</thead>
+	@try
+	{
+		 int count = 1; 
+		foreach (var item in Model.ResultReport)
+		{
+			<tr>
+				<td>@count</td>
+				<td>
+					@Html.DisplayFor(m => item.UserName)
+				</td>
+				<td>
+					@Html.DisplayFor(m => item.TotalMarks)
+				</td>
+				<td>
+					@Html.DisplayFor(m => item.PassingMarks)
+				</td>
+				<td>
+					@Html.DisplayFor(m => item.ResultMarks)
+				</td>
+				<td>
+					@Html.DisplayFor(m => item.Result)
+				</td>
+			</tr>
+			count++;
+		}
+	}
+	catch { }
+</table>
+
+<script>
+	$(function () {
+		$("#PaperDate").datepicker({
+			dateFormat: 'yy-mm-dd'
+		});
+		GetPaper();
+		$("#TestId").val(@Model.PaperId);
+	});
+
+	$("#TestId").change(function () {
+		debugger;
+		var paperId = $("#TestId").val();
+		$("#PaperId").val(paperId);
+		$("#formSubmit").submit();
+	});
+
+	$("#PaperDate").change(function () {
+		GetPaper();
+	});
+
+	function GetPaper() {
+		var paperDate = $("#PaperDate").val();
+		$.ajax({
+			method: "POST",
+			url: "/Result/GetPaperByDate/",
+			data: { testDate: paperDate },
+			success: function (data) {
+				var s = '<option value="-1">Please Select Test.</option>';
+				for (var i = 0; i < data.length; i++) {
+					s += '<option value="' + data[i].PaperId + '">' + data[i].PaperName + '</option>';
+				}
+				if (data.length < 1) { alert("No test was taken on this day."); }
+				$("#TestId").html(s);
+			}
+		});
+	}
+</script>

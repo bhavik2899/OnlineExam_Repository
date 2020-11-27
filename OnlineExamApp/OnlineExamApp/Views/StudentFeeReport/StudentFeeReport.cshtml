@@ -1,0 +1,113 @@
+﻿@model System.Data.DataTable
+@*@model IEnumerable<OnlineExamApp.Models.StudentFeeDetailsModel>*@
+@{
+	ViewBag.Title = "StudentFeeReport";
+}
+
+<h2 class="page-title">Student Fee Report</h2>
+
+@*<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+	@foreach (var student in Model)
+	{
+		<tr>
+			<td>@student.StudentName</td>
+			@foreach (var feeStructure in student.FeeStructureModelList)
+			{
+				foreach (var feeHead in feeStructure.HeadModelList)
+				{
+					<td>@feeHead.TotalHeadAmount</td>
+					<td>@feeHead.PaidHeadAmount</td>
+					<td>@feeHead.PayableHeadAmount</td>
+				}
+			}
+		</tr>
+	}
+</table>*@
+
+
+<table border="1">
+	<thead>
+		<tr>
+			@foreach (System.Data.DataColumn col in Model.Columns) 
+			{ 
+			<th>@col.Caption</th>
+			}
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(System.Data.DataRow row in Model.Rows)
+		{ 
+		<tr>
+			@foreach (var cell in row.ItemArray) 
+			{
+			<td>@cell.ToString()</td>
+			}
+		</tr>
+		}
+	</tbody>
+</table>
+
+
+
+
+
+@*@foreach (var item in Model)
+{
+	@Html.HiddenFor(m => item.StudentID)
+	for (int i = 0; i < item.FeeScheduleModelList.Count; i++)
+	{
+		@Html.HiddenFor(m => item.FeeScheduleModelList[i].FeeStructureId)
+		@Html.HiddenFor(m => item.FeeScheduleModelList[i].StudentFeeScheduleId)
+
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+					<thead>
+						<tr>
+							<th class="th">
+								@Html.Label("Sr")
+							</th>
+							<th class="th">
+								@Html.Label("Fee Head")
+							</th>
+							<th class="th">
+								@Html.Label("Head Amount")
+							</th>
+							<th class="th">
+								@Html.Label("Payable Head Amount")
+							</th>
+						</tr>
+					</thead>
+					@for (int j = 0; j < item.FeeScheduleModelList[i].feeHeadModelList.Count; j++)
+					{
+						<tr>
+							<td>
+								@(j + 1)
+							</td>
+							<td>
+								@Html.DisplayFor(m => item.FeeScheduleModelList[i].feeHeadModelList[j].HeadName)
+								@Html.HiddenFor(m => item.FeeScheduleModelList[i].feeHeadModelList[j].FeeHeadId)
+								@Html.HiddenFor(m => item.FeeScheduleModelList[i].feeHeadModelList[j].IsOptional)
+							</td>
+							<td>
+								@Html.DisplayFor(m => item.FeeScheduleModelList[i].feeHeadModelList[j].AmountByHead)
+								@Html.HiddenFor(m => item.FeeScheduleModelList[i].feeHeadModelList[j].AmountByHead, new { @id = "amountByHead_" + j })
+								@Html.HiddenFor(m => item.FeeScheduleModelList[i].feeHeadModelList[j].PaidHeadAmount, new { @id = "paidHeadAmount_" + j })
+							</td>
+							<td>
+								@Html.TextBoxFor(m => item.FeeScheduleModelList[i].feeHeadModelList[j].PayableHeadAmount, new { @class = "form-control", onchange = "PayAmount()" })
+							</td>
+						</tr>
+					}
+					<tr>
+						<td></td>
+						<th>@Html.Label("Total Amount")</th>
+						<th>@Html.DisplayFor(m => item.FeeScheduleModelList[i].TotalPayableAmount)</th>
+						<th id="totalPay"></th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	}
+}*@
+

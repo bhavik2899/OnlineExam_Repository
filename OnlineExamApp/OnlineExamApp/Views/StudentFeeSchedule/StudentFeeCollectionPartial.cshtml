@@ -1,0 +1,121 @@
+﻿@model OnlineExamApp.Models.StudentFeeCollectionModel
+
+@using (Html.BeginForm("StudentFeeCollectionPartial", "StudentFeeSchedule", FormMethod.Post))
+{
+
+	for (int i = 0; i < Model.FeeScheduleModelList.Count; i++)
+	{
+		@Html.HiddenFor(m=>m.StudentID)
+		@Html.HiddenFor(m=>Model.FeeScheduleModelList[i].FeeStructureId)
+		@Html.HiddenFor(m=>Model.FeeScheduleModelList[i].StudentFeeScheduleId)
+
+		<div class="row mt-5">
+			<div class="col-sm-12 d-flex justify-content-between">
+				<h5>Structure Name: <span class="page-title">@Model.FeeScheduleModelList[i].StructurName</span></h5>
+				<h5>Total PayableAmount : <span class="page-title">@Model.FeeScheduleModelList[i].TotalPayableAmount</span></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+					<thead>
+						<tr>
+							<th class="th">
+								@Html.Label("Sr")
+							</th>
+							<th class="th">
+								@Html.Label("Fee Head")
+							</th>
+							<th class="th">
+								@Html.Label("Head Amount")
+							</th>
+							<th class="th">
+								@Html.Label("Payable Head Amount")
+							</th>
+						</tr>
+					</thead>
+					@for (int j = 0; j < Model.FeeScheduleModelList[i].feeHeadModelList.Count; j++)
+					{
+						<tr>
+							<td>
+								@(j + 1)
+							</td>
+							<td>
+								@Html.DisplayFor(m => Model.FeeScheduleModelList[i].feeHeadModelList[j].HeadName)
+								@Html.HiddenFor(m => Model.FeeScheduleModelList[i].feeHeadModelList[j].FeeHeadId)
+								@Html.HiddenFor(m=>Model.FeeScheduleModelList[i].feeHeadModelList[j].IsOptional)
+							</td>
+							<td>
+								@Html.DisplayFor(m => Model.FeeScheduleModelList[i].feeHeadModelList[j].AmountByHead)
+								@Html.HiddenFor(m => Model.FeeScheduleModelList[i].feeHeadModelList[j].AmountByHead, new { @id = "amountByHead_" + j })
+								@Html.HiddenFor(m => Model.FeeScheduleModelList[i].feeHeadModelList[j].PaidHeadAmount, new { @id = "paidHeadAmount_" + j })
+							</td>
+							<td>
+								@Html.TextBoxFor(m => Model.FeeScheduleModelList[i].feeHeadModelList[j].PayableHeadAmount, new { @class = "form-control", onchange = "PayAmount()" })
+							</td>
+						</tr>
+					}
+					<tr>
+						<td></td>
+						<th>@Html.Label("Total Amount")</th>
+						<th>@Html.DisplayFor(m => Model.FeeScheduleModelList[i].TotalPayableAmount)</th>
+						<th id="totalPay"></th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	}
+	<div class="row d-flex justify-content-center mt-3">
+		<button type="submit" id="submitBtn" class="btn btn-danger">Save</button>
+	</div>
+}
+<script type="text/javascript">
+
+	$(function () {
+		PayableAmountByHead();
+	});
+
+	function PayableAmountByHead() {
+		for(i = 0; i< @Model.FeeScheduleModelList[0].feeHeadModelList.Count; i++)
+		{
+			var totalHeadAmount = Number($("#amountByHead_" + i).val());
+			var paidHeadAmount = Number($("#paidHeadAmount_" + i).val());
+			var payableHeadAmount = totalHeadAmount - paidHeadAmount;
+
+			var payableHeadAmountBox = $("#FeeScheduleModelList_0__feeHeadModelList_" + i + "__PayableHeadAmount");
+			payableHeadAmountBox.val(payableHeadAmount);
+		}
+		TotalPay();
+	}
+
+	function PayAmount() {
+		for(i = 0; i< @Model.FeeScheduleModelList[0].feeHeadModelList.Count; i++)
+		{
+			var totalHeadAmount = Number($("#amountByHead_" + i).val());
+			var paidHeadAmount = Number($("#paidHeadAmount_" + i).val());
+			var payableHeadAmount = totalHeadAmount - paidHeadAmount;
+
+			var payableHeadAmountBox = $("#FeeScheduleModelList_0__feeHeadModelList_" + i + "__PayableHeadAmount");
+			var payHeadAmount = Number(payableHeadAmountBox.val());
+
+			if (payHeadAmount > payableHeadAmount) {
+				payableHeadAmountBox.val(0);
+				alert("You can not pay head amount more then Payable Head Amount");
+			}
+		}
+		TotalPay();
+	}
+
+	function TotalPay() {
+		var totalPay = 0;
+
+		for(i = 0; i< @Model.FeeScheduleModelList[0].feeHeadModelList.Count; i++)
+		{
+			var payableHeadAmountBox = $("#FeeScheduleModelList_0__feeHeadModelList_" + i + "__PayableHeadAmount");
+			var payHeadAmount = Number(payableHeadAmountBox.val());
+
+			totalPay = totalPay + payHeadAmount;
+		}
+		$("#totalPay").html(totalPay);
+	}
+</script>

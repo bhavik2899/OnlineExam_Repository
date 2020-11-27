@@ -1,0 +1,78 @@
+﻿@model OnlineExamApp.Models.TestModel
+@{
+	ViewBag.Title = "TestConduct";
+}
+
+@using (Html.BeginForm("TestConduct", "Test", FormMethod.Post, new { @id = "submitForm" }))
+{
+	<div class="row ui-widget-shadow mb-3">
+
+		<div class="col d-flex justify-content-center p-3">
+			<div class="form-group mr-3 w-50">
+				@Html.LabelFor(m => m.UserName)
+				@Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group w-50">
+				@Html.LabelFor(m => m.Age)
+				@Html.TextBoxFor(m => m.Age, new { @Type = "number", @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
+			</div>
+			@Html.HiddenFor(m => m.ConductDateTime)
+			@Html.HiddenFor(m => m.PaperID)
+		</div>
+	</div>
+
+	for (int i = 0; i < Model.Questions.Count; i++)
+	{
+		@Html.HiddenFor(m => Model.Questions[i].PK_QueMasterId)
+
+		<p class="font-weight-bold"><span>@(i + 1)</span>) @Html.DisplayFor(m => Model.Questions[i].Title)</p>
+
+		<div id="Question@(i)">
+			@for (int j = 0; j < Model.Questions[i].qom.Count; j++)
+			{
+				@Html.HiddenFor(m => Model.Questions[i].qom[j].PK_QueOptionMasterId)
+
+				if (Model.Questions[i].IsMultichoice == true)
+				{
+					@*@Html.CheckBoxFor(m =>Model.Questions[i].PK_QueMasterId, new { @class = "mr-2" })*@
+					@Html.CheckBox("oprion_" + Model.Questions[i].PK_QueMasterId.ToString(), new { @value = Model.Questions[i].qom[j].PK_QueOptionMasterId.ToString(),@class = "mr-2" })
+				}
+				else
+				{
+					@*@Html.RadioButton("Questions["+i+"].qom["+j+"]", true, new { @class = "mr-2", onclick = "radioBehaviour(this)" })
+					@Html.HiddenFor(m=>Model.Questions[i].qom[j].IsSelected,new {@value = false, @id = "H_Questions["+i+"].qom["+j+"]"})*@
+					@Html.RadioButton("oprion_" + Model.Questions[i].PK_QueMasterId.ToString(),  Model.Questions[i].qom[j].PK_QueOptionMasterId.ToString() ,new { @class = "mr-2"})
+
+				}
+
+				@Html.DisplayFor(m => Model.Questions[i].qom[j].OptionTitle)
+				<br />
+			}
+		</div>
+		<hr />
+	}
+
+	<div class="row d-flex justify-content-center mt-3">
+		<button type="button" id="submitBtn" class="btn btn-danger">Submit</button>
+	</div>
+}
+
+<script type="text/javascript">
+
+	function radioBehaviour(item) {
+		var radioID = $(item).attr("id");
+
+		$("#" + radioID).parent().find('input[type=radio]').each((index, elem) => {
+			$("#" + elem.id).not("#" + radioID).prop('checked', false);
+		});
+	}
+
+	$("#submitBtn").click(function () {
+
+		$("#submitForm").submit();
+	});
+
+</script>
+

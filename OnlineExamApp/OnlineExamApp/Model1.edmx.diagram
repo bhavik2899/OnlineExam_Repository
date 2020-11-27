@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="72604243fc954fe4a152f04800839668" Name="Diagram1">
+        <EntityTypeShape EntityType="OnlineExamModel.PaperMaster" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="OnlineExamModel.PaperQueMaster" Width="1.5" PointX="6" PointY="6.25" />
+        <EntityTypeShape EntityType="OnlineExamModel.QueMaster" Width="1.5" PointX="0.75" PointY="6" />
+        <EntityTypeShape EntityType="OnlineExamModel.QueOptionMaster" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="OnlineExamModel.TestConductAn" Width="1.5" PointX="3" PointY="5.25" />
+        <AssociationConnector Association="OnlineExamModel.FK__PaperQueM__FK_Pa__3F466844" />
+        <AssociationConnector Association="OnlineExamModel.FK__PaperQueM__FK_Qu__403A8C7D" />
+        <AssociationConnector Association="OnlineExamModel.FK__QueOption__FK_Qu__3A81B327" />
+        <AssociationConnector Association="OnlineExamModel.FK__TestCondu__FK_Qu__45F365D3" />
+        <EntityTypeShape EntityType="OnlineExamModel.TestConductMaster" Width="1.5" PointX="6" PointY="1.125" />
+        <AssociationConnector Association="OnlineExamModel.FK__TestCondu__FK_Pa__52593CB8" />
+        <AssociationConnector Association="OnlineExamModel.FK__TestCondu__FK_Te__44FF419A" />
+        <EntityTypeShape EntityType="OnlineExamModel.FeeHead" Width="1.5" PointX="12.875" PointY="5.625" />
+        <EntityTypeShape EntityType="OnlineExamModel.FeeStructur" Width="1.5" PointX="10.625" PointY="5.5" />
+        <EntityTypeShape EntityType="OnlineExamModel.FeeStructurHead" Width="1.5" PointX="15.125" PointY="5.625" />
+        <EntityTypeShape EntityType="OnlineExamModel.Student" Width="1.5" PointX="8.375" PointY="1.375" />
+        <EntityTypeShape EntityType="OnlineExamModel.StudentFeeCollection" Width="1.5" PointX="12.875" PointY="1" />
+        <EntityTypeShape EntityType="OnlineExamModel.StudentFeeCollectionHead" Width="1.5" PointX="15.125" PointY="1.125" />
+        <AssociationConnector Association="OnlineExamModel.FK__FeeStruct__FK_Fe__693CA210" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_Fe__7E37BEF6" />
+        <AssociationConnector Association="OnlineExamModel.FK__FeeStruct__FK_Fe__68487DD7" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_Fe__787EE5A0" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_St__76969D2E" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_St__7C4F7684" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_St__7B5B524B" />
+        <EntityTypeShape EntityType="OnlineExamModel.StudentFeeSchedule" Width="1.5" PointX="17.875" PointY="3.25" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_Fe__04E4BC85" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_St__6C190EBB" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_St__778AC167" />
+        <AssociationConnector Association="OnlineExamModel.FK__StudentFe__FK_St__7D439ABD" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

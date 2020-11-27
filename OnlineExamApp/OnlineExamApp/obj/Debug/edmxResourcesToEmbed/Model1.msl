@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OnlineExamModelStoreContainer" CdmEntityContainer="OnlineExamEntities">
+    <EntitySetMapping Name="PaperMasters">
+      <EntityTypeMapping TypeName="OnlineExamModel.PaperMaster">
+        <MappingFragment StoreEntitySet="PaperMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+          <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+          <ScalarProperty Name="NoOfQuestion" ColumnName="NoOfQuestion" />
+          <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaperQueMasters">
+      <EntityTypeMapping TypeName="OnlineExamModel.PaperQueMaster">
+        <MappingFragment StoreEntitySet="PaperQueMaster">
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+          <ScalarProperty Name="FK_QueMasterId" ColumnName="FK_QueMasterId" />
+          <ScalarProperty Name="FK_PaperMasterId" ColumnName="FK_PaperMasterId" />
+          <ScalarProperty Name="PK_PaperQueMasterId" ColumnName="PK_PaperQueMasterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QueMasters">
+      <EntityTypeMapping TypeName="OnlineExamModel.QueMaster">
+        <MappingFragment StoreEntitySet="QueMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsMultichoice" ColumnName="IsMultichoice" />
+          <ScalarProperty Name="CorrectAnsId" ColumnName="CorrectAnsId" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PK_QueMasterId" ColumnName="PK_QueMasterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QueOptionMasters">
+      <EntityTypeMapping TypeName="OnlineExamModel.QueOptionMaster">
+        <MappingFragment StoreEntitySet="QueOptionMaster">
+          <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FK_QueMasterId" ColumnName="FK_QueMasterId" />
+          <ScalarProperty Name="PK_QueOptionMasterId" ColumnName="PK_QueOptionMasterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestConductAns">
+      <EntityTypeMapping TypeName="OnlineExamModel.TestConductAn">
+        <MappingFragment StoreEntitySet="TestConductAns">
+          <ScalarProperty Name="SelectedAnsOptionId" ColumnName="SelectedAnsOptionId" />
+          <ScalarProperty Name="FK_QueMasterId" ColumnName="FK_QueMasterId" />
+          <ScalarProperty Name="FK_TestConductMasterId" ColumnName="FK_TestConductMasterId" />
+          <ScalarProperty Name="PK_TestConductAnsId" ColumnName="PK_TestConductAnsId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_InsertUpdatePaper" FunctionName="OnlineExamModel.Store.sp_InsertUpdatePaper" />
+    <FunctionImportMapping FunctionImportName="sp_GetQuestionByPaperID" FunctionName="OnlineExamModel.Store.sp_GetQuestionByPaperID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.sp_GetQuestionByPaperID_Result">
+          <ScalarProperty Name="PK_QueMasterId" ColumnName="PK_QueMasterId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+          <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetPaperList" FunctionName="OnlineExamModel.Store.sp_GetPaperList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.sp_GetPaperList_Result">
+          <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+          <ScalarProperty Name="NoOfQuestion" ColumnName="NoOfQuestion" />
+          <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+          <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetPaperByPrimaryKey" FunctionName="OnlineExamModel.Store.sp_GetPaperByPrimaryKey">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.sp_GetPaperByPrimaryKey_Result">
+          <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+          <ScalarProperty Name="NoOfQuestion" ColumnName="NoOfQuestion" />
+          <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+          <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_PaperCompareTime" FunctionName="OnlineExamModel.Store.sp_PaperCompareTime" />
+    <FunctionImportMapping FunctionImportName="sp_GetQueByPaperID" FunctionName="OnlineExamModel.Store.sp_GetQueByPaperID" />
+    <FunctionImportMapping FunctionImportName="sp_InsertTestConduct" FunctionName="OnlineExamModel.Store.sp_InsertTestConduct" />
+    <FunctionImportMapping FunctionImportName="sp_InsertUpdateQuestion" FunctionName="OnlineExamModel.Store.sp_InsertUpdateQuestion" />
+    <FunctionImportMapping FunctionImportName="sp_ResultReport" FunctionName="OnlineExamModel.Store.sp_ResultReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.sp_ResultReport_Result">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+          <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+          <ScalarProperty Name="ResultMarks" ColumnName="ResultMarks" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_TestSolution" FunctionName="OnlineExamModel.Store.sp_TestSolution" />
+    <EntitySetMapping Name="TestConductMasters">
+      <EntityTypeMapping TypeName="OnlineExamModel.TestConductMaster">
+        <MappingFragment StoreEntitySet="TestConductMaster">
+          <ScalarProperty Name="ResultMarks" ColumnName="ResultMarks" />
+          <ScalarProperty Name="FK_PaperMasterId" ColumnName="FK_PaperMasterId" />
+          <ScalarProperty Name="ConductDateTime" ColumnName="ConductDateTime" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="PK_TestConductMasterId" ColumnName="PK_TestConductMasterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SplitString" FunctionName="OnlineExamModel.Store.SplitString" />
+    <FunctionImportMapping FunctionImportName="sp_StudentTestSolution2" FunctionName="OnlineExamModel.Store.sp_StudentTestSolution2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.sp_StudentTestSolution2_Result">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+          <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+          <ScalarProperty Name="ResultMarks" ColumnName="ResultMarks" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
+          <ScalarProperty Name="PK_QueMasterId" ColumnName="PK_QueMasterId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="IsMultichoice" ColumnName="IsMultichoice" />
+          <ScalarProperty Name="OptionOrder" ColumnName="OptionOrder" />
+          <ScalarProperty Name="PK_QueOptionMasterId" ColumnName="PK_QueOptionMasterId" />
+          <ScalarProperty Name="OptionTitle" ColumnName="OptionTitle" />
+          <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+          <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_StudentTestSolution" FunctionName="OnlineExamModel.Store.sp_StudentTestSolution" />
+    <FunctionImportMapping FunctionImportName="sp_PaperListByDate" FunctionName="OnlineExamModel.Store.sp_PaperListByDate">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.sp_PaperListByDate_Result">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="FeeHeads">
+      <EntityTypeMapping TypeName="OnlineExamModel.FeeHead">
+        <MappingFragment StoreEntitySet="FeeHead">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+          <ScalarProperty Name="HeadName" ColumnName="HeadName" />
+          <ScalarProperty Name="PK_FeeHeadId" ColumnName="PK_FeeHeadId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeStructurs">
+      <EntityTypeMapping TypeName="OnlineExamModel.FeeStructur">
+        <MappingFragment StoreEntitySet="FeeStructur">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
+          <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+          <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeStructurHeads">
+      <EntityTypeMapping TypeName="OnlineExamModel.FeeStructurHead">
+        <MappingFragment StoreEntitySet="FeeStructurHead">
+          <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="FK_FeeHeadId" ColumnName="FK_FeeHeadId" />
+          <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+          <ScalarProperty Name="PK_FeeStructurHeadId" ColumnName="PK_FeeStructurHeadId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="OnlineExamModel.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Division" ColumnName="Division" />
+          <ScalarProperty Name="Standard" ColumnName="Standard" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PK_StudentId" ColumnName="PK_StudentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentFeeCollections">
+      <EntityTypeMapping TypeName="OnlineExamModel.StudentFeeCollection">
+        <MappingFragment StoreEntitySet="StudentFeeCollection">
+          <ScalarProperty Name="ReceiptNO" ColumnName="ReceiptNO" />
+          <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+          <ScalarProperty Name="FeeCancellationDate" ColumnName="FeeCancellationDate" />
+          <ScalarProperty Name="FeePaidDate" ColumnName="FeePaidDate" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+          <ScalarProperty Name="FK_StudentFeeScheduleId" ColumnName="FK_StudentFeeScheduleId" />
+          <ScalarProperty Name="FK_StudentId" ColumnName="FK_StudentId" />
+          <ScalarProperty Name="PK_StudentFeeCollectionId" ColumnName="PK_StudentFeeCollectionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentFeeCollectionHeads">
+      <EntityTypeMapping TypeName="OnlineExamModel.StudentFeeCollectionHead">
+        <MappingFragment StoreEntitySet="StudentFeeCollectionHead">
+          <ScalarProperty Name="IsFeeCancel" ColumnName="IsFeeCancel" />
+          <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+          <ScalarProperty Name="FK_FeeHeadId" ColumnName="FK_FeeHeadId" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="FK_StudentFeeScheduleId" ColumnName="FK_StudentFeeScheduleId" />
+          <ScalarProperty Name="FK_StudentId" ColumnName="FK_StudentId" />
+          <ScalarProperty Name="FK_StudentFeeCollectionId" ColumnName="FK_StudentFeeCollectionId" />
+          <ScalarProperty Name="PK_StudentFeeCollectionHeadId" ColumnName="PK_StudentFeeCollectionHeadId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Sp_GetWholeFeeStructureByPK" FunctionName="OnlineExamModel.Store.Sp_GetWholeFeeStructureByPK">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetWholeFeeStructureByPK_Result">
+          <ScalarProperty Name="PK_FeeHeadId" ColumnName="PK_FeeHeadId" />
+          <ScalarProperty Name="HeadName" ColumnName="HeadName" />
+          <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+          <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+          <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_InsertUpdateFeeStructure" FunctionName="OnlineExamModel.Store.Sp_InsertUpdateFeeStructure" />
+    <EntitySetMapping Name="StudentFeeSchedules">
+      <EntityTypeMapping TypeName="OnlineExamModel.StudentFeeSchedule">
+        <MappingFragment StoreEntitySet="StudentFeeSchedule">
+          <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+          <ScalarProperty Name="FK_StudentID" ColumnName="FK_StudentID" />
+          <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+          <ScalarProperty Name="DiscountAmountPercentage" ColumnName="DiscountAmountPercentage" />
+          <ScalarProperty Name="ScheduleDate" ColumnName="ScheduleDate" />
+          <ScalarProperty Name="TotalFeeAmount" ColumnName="TotalFeeAmount" />
+          <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Sp_InsertUpdateStudentFeeSchedule" FunctionName="OnlineExamModel.Store.Sp_InsertUpdateStudentFeeSchedule" />
+    <FunctionImportMapping FunctionImportName="Sp_InsertUpdateStudentFeeCollection" FunctionName="OnlineExamModel.Store.Sp_InsertUpdateStudentFeeCollection" />
+    <FunctionImportMapping FunctionImportName="Sp_GetStudentFeeCollectionByStudent" FunctionName="OnlineExamModel.Store.Sp_GetStudentFeeCollectionByStudent">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetStudentFeeCollectionByStudent_Result">
+          <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+          <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+          <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+          <ScalarProperty Name="TotalFeeAmount" ColumnName="TotalFeeAmount" />
+          <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_GetStudentFeeScheduleByFeeStructureID" FunctionName="OnlineExamModel.Store.Sp_GetStudentFeeScheduleByFeeStructureID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetStudentFeeScheduleByFeeStructureID_Result">
+          <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+          <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+          <ScalarProperty Name="DiscountAmountPercentage" ColumnName="DiscountAmountPercentage" />
+          <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+          <ScalarProperty Name="FK_StudentID" ColumnName="FK_StudentID" />
+          <ScalarProperty Name="UnPaid" ColumnName="UnPaid" />
+          <ScalarProperty Name="PK_StudentId" ColumnName="PK_StudentId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_GetStudentFeeCollectionByFeeStructure" FunctionName="OnlineExamModel.Store.Sp_GetStudentFeeCollectionByFeeStructure">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetStudentFeeCollectionByFeeStructure_Result">
+          <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+          <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+          <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+          <ScalarProperty Name="TotalFeeAmount" ColumnName="TotalFeeAmount" />
+          <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+          <ScalarProperty Name="PK_FeeHeadId" ColumnName="PK_FeeHeadId" />
+          <ScalarProperty Name="HeadName" ColumnName="HeadName" />
+          <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+          <ScalarProperty Name="AmountByHead" ColumnName="AmountByHead" />
+          <ScalarProperty Name="PK_StudentFeeCollectionId" ColumnName="PK_StudentFeeCollectionId" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="PaidHeadAmount" ColumnName="PaidHeadAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Report_Student_FeeCollection" FunctionName="OnlineExamModel.Store.Sp_Report_Student_FeeCollection" />
+  </EntityContainerMapping>
+</Mapping>

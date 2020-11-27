@@ -1,0 +1,101 @@
+﻿@model OnlineExamApp.Models.StudentSolutionModel
+@{
+	ViewBag.Title = "StudentSolution";
+}
+
+<h2 class="page-title">StudentSolution</h2>
+
+<div class="row inner-Shadow p-3 my-2">
+	<div class="col-sm-12">
+		<div class="form-inline d-flex justify-content-center">
+			@Html.LabelFor(m => m.PaperId)
+			@Html.DropDownListFor(m => m.PaperId, new SelectList(Model.TestList, "Value", "Text"), "Please Select", new { @class = "form-control w-50 ml-3" })
+			@Html.ValidationMessageFor(m => m.PaperId, "", new { @class = "text-danger" })
+		</div>
+		@Html.HiddenFor(m => m.PaperId)
+	</div>
+</div>
+
+@for (int std = 0; std < Model.Students.Count; std++)
+{
+	<table class="w-100 table-bordered box-Shadow p-1 mt-3 mb-3">
+		<thead>
+			<tr>
+				<th class="th">
+					Sr.
+				</th>
+				<th class="th">
+					@Html.Label("UserName")
+				</th>
+				<th class="th">
+					@Html.Label("Total Marks")
+				</th>
+				<th class="th">
+					@Html.Label("Passing Marks")
+				</th>
+				<th class="th">
+					@Html.Label("Result Marks")
+				</th>
+				<th class="th">
+					@Html.Label("Result")
+				</th>
+			</tr>
+		</thead>
+		<tr>
+			<td>@(std + 1)</td>
+			<td>
+				@Html.DisplayFor(m => Model.Students[std].UserName)
+			</td>
+			<td>
+				@Html.DisplayFor(m => Model.Students[std].TotalMarks)
+			</td>
+			<td>
+				@Html.DisplayFor(m => Model.Students[std].PassingMarks)
+			</td>
+			<td>
+				@Html.DisplayFor(m => Model.Students[std].ResultMarks)
+			</td>
+			<td>
+				@Html.DisplayFor(m => Model.Students[std].Result)
+			</td>
+		</tr>
+	</table>
+
+	for (int i = 0; i < Model.Students[std].Questions.Count; i++)
+	{
+		@Html.HiddenFor(m => Model.Students[std].Questions[i].PK_QueMasterId)
+
+		<p class="font-weight-bold"><span>@(i + 1)</span>) @Html.DisplayFor(m => Model.Students[std].Questions[i].Title)</p>
+
+		for (int j = 0; j < Model.Students[std].Questions[i].qom.Count; j++)
+		{
+			@Html.HiddenFor(m => Model.Students[std].Questions[i].qom[j].PK_QueOptionMasterId)
+
+
+			<p class='p-1 m-1 rounded @(Convert.ToBoolean(Model.Students[std].Questions[i].qom[j].IsCorrect) == true ? "greenBg" : "") @(Convert.ToBoolean(Model.Students[std].Questions[i].qom[j].IsSelected) == true ? "redBg" : "") '>
+
+				@if (Model.Students[std].Questions[i].IsMultichoice == true)
+				{
+					@Html.CheckBoxFor(m => Model.Students[std].Questions[i].qom[j].IsSelected, new { @class = "readonly" })
+				}
+				else
+				{
+					@Html.RadioButtonFor(m => Model.Students[std].Questions[i].qom[j].IsSelected, true, new { @class = "readonly" })
+				}
+
+				@Html.DisplayFor(m => Model.Students[std].Questions[i].qom[j].OptionTitle)
+			</p>
+		}
+		<hr />
+	}
+
+	<hr />
+}
+
+<script>
+	$("#PaperId").change(function () {
+		var paperId = $("#PaperId").val();
+		var url = "@Url.Action("StudentSolution2", "Result",  new { @id = "paperId" })";
+		window.location.href = url.replace('paperId', paperId);
+	});
+</script>

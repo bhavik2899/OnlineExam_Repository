@@ -1,0 +1,128 @@
+﻿@model OnlineExamApp.Models.StudentFeeScheduleModel
+@{
+	ViewBag.Title = "StudentFeeSchedule";
+}
+
+<h2 class="page-title">StudentFeeSchedule</h2>
+
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+<div class="row inner-Shadow p-3 my-2">
+	<div class="col-sm-12">
+		<div class="form-inline d-flex justify-content-center">
+			@Html.LabelFor(m => m.FeeStructurId)
+			@Html.DropDownListFor(m => m.FeeStructurId, new SelectList(Model.FeeStructureList, "Value", "Text"), "Please Select", new { @class = "form-control w-50 ml-3" })
+			@Html.ValidationMessageFor(m => m.FeeStructurId, "", new { @class = "text-danger" })
+		</div>
+	</div>
+</div>
+
+<div id="StudentFeeSchedule">
+	@using (Html.BeginForm("StudentFeeSchedule", "StudentFeeSchedule", FormMethod.Post))
+	{
+		@Html.HiddenFor(m=>m.FeeStructurId)
+		@Html.HiddenFor(m=>m.TotalFee)
+		<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+			<thead>
+				<tr>
+					<th class="th">
+						@Html.Label("IsInclude")
+					</th>
+					<th class="th">
+						@Html.Label("Student Name")
+					</th>
+					<th class="th">
+						@Html.Label("Total Fee")
+					</th>
+					<th class="th">
+						@Html.Label("Discount(Percentage)")
+					</th>
+					<th class="th">
+						@Html.Label("Payable Amount")
+					</th>
+				</tr>
+			</thead>
+			@for (int i = 0; i < Model.StudentsByFeeStructure.Count; i++)
+			{
+				<tr>
+					@if (Model.StudentsByFeeStructure[i].UnPaidFee == true)
+					{
+						<td>
+							@Html.CheckBoxFor(m => Model.StudentsByFeeStructure[i].IsInclude, new { @class = "readonly" })
+						</td>
+					}
+					else
+					{
+						<td>
+							@Html.CheckBoxFor(m => Model.StudentsByFeeStructure[i].IsInclude)
+						</td>
+					}
+					<td>
+						@Html.DisplayFor(m => Model.StudentsByFeeStructure[i].Name)
+						@Html.HiddenFor(m => Model.StudentsByFeeStructure[i].StudentID)
+					</td>
+					<td>
+						@Html.DisplayFor(m => Model.TotalFee)
+					</td>
+
+					@if (Model.StudentsByFeeStructure[i].UnPaidFee == true)
+					{
+						<td>
+							@Html.TextBoxFor(m => Model.StudentsByFeeStructure[i].DiscountAmountPercentage, new { @class = "form-control", @readonly = "readonly" })
+						</td>
+					}
+					else
+					{
+						<td>
+							@Html.TextBoxFor(m => Model.StudentsByFeeStructure[i].DiscountAmountPercentage, new { @type = "Number", @class = "form-control", onchange = "TotalpayableAmount()" })
+						</td>
+					}
+					<td>
+						@Html.TextBoxFor(m => Model.StudentsByFeeStructure[i].TotalPayableAmount, new { @class = "form-control", @readonly = "readonly" })
+					</td>
+				</tr>
+			}
+		</table>
+
+		<div class="row d-flex justify-content-center mt-3">
+			<button type="submit" id="submitBtn" class="btn btn-danger">Save</button>
+		</div>
+	}
+</div>
+
+<script type="text/javascript">
+	$(function () {
+		if ($("#FeeStructurId").val() == "") {
+			$("#StudentFeeSchedule").hide();
+		}
+		TotalpayableAmount();
+	});
+
+	$("#FeeStructurId").change(function () {
+		var feeStructurId = $("#FeeStructurId").val();
+		var url = "@Url.Action("StudentFeeSchedule", "StudentFeeSchedule",  new { @id = "feeStructurId" })";
+		window.location.href = url.replace('feeStructurId', feeStructurId);
+	});
+
+	function TotalpayableAmount() {
+		for(i = 0; i< @Model.StudentsByFeeStructure.Count; i++)
+		{
+			var totalAmount = '@Model.TotalFee';
+			var discount = Number($("#StudentsByFeeStructure_" + i + "__DiscountAmountPercentage").val());
+			var payableAmountBox = $("#StudentsByFeeStructure_" + i + "__TotalPayableAmount");
+			if (discount > 100) {
+				alert("You can not give discount more then 100%.");
+				$("#StudentsByFeeStructure_" + i + "__DiscountAmountPercentage").val(0);
+				return false;
+			}
+			else if (discount > 0) {
+				var payableAmount = totalAmount - ((totalAmount * discount) / 100);
+				payableAmountBox.val(payableAmount);
+			}
+			else {
+				payableAmountBox.val(totalAmount);
+			}
+		}
+	}
+
+</script>

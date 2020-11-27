@@ -1,0 +1,43 @@
+﻿@model IEnumerable<OnlineExamApp.Models.QuestionModel>
+@{
+	ViewBag.Title = "QuestionList";
+}
+
+<div class="d-flex justify-content-between mb-2">
+	<h2 class="page-title">Question List</h2>
+	@Html.ActionLink("Add Question", "AddEditQuestion", "Question", new { @class = "btn btn-danger mt-2 px-2 py-1 h-50" })
+</div>
+
+<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+	<thead>
+		<tr>
+			<th class="th">
+				Sr.
+			</th>
+			<th class="th">
+				@Html.Label("Title")
+			</th>
+			<th class="th">
+				@Html.Label("No Of Option")
+			</th>
+		</tr>
+	</thead>
+	@{ int count = 1; }
+	@foreach (var que in Model)
+	{
+		<tr>
+			<td>@count</td>
+			<td>
+				@Html.DisplayFor(m => que.Title)
+			</td>
+			<td>
+				@Html.DisplayFor(m => que.NoOfOption)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "AddEditQuestion", new { @id = que.QueId }, new { @class = "edit btn btn-secondary px-2 py-0 mr-2" })
+				@Html.ActionLink("Delete", "DeleteQuestion", new { @id = que.QueId }, new { @class = "delete btn btn-secondary px-2 py-0 ", onclick = "return confirm('Are you sure you wish to delete this Question Details?');" })
+			</td>
+		</tr>
+		count++;
+	}
+</table>

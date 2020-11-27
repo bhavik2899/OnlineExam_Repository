@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OnlineExamApp.Models.ShortPaperModel>
+@{
+	ViewBag.Title = "TestList";
+	string errorMsg = "";
+	try { errorMsg = TempData["ErrorMessage"].ToString(); } catch { }
+
+}
+
+<h2 class="page-title">Online Exam</h2>
+
+<div class="row d-flex justify-content-center">
+	@Html.ValidationSummary(false, @errorMsg, new { @class = "text-danger h4 ml-3" })
+</div>
+
+<div class="row">
+
+	@foreach (var item in Model)
+	{
+		<div class="col-sm-6 my-3">
+			<div class="card">
+				<div class="card-body text-center p-3">
+					<div class="d-flex justify-content-between">
+						<div><span> Start Time:</span> @Html.DisplayFor(m => item.StartTime)</div>
+						<div><span>End Time:</span> @Html.DisplayFor(m => item.EndTime)</div>
+					</div>
+
+					@{string examDate = item.ExamDate.ToShortDateString();}
+					<span>Exam Date: @examDate</span>
+
+					<h4 class="card-title">@Html.DisplayFor(m => item.Title)</h4>
+
+					@Html.ActionLink("Start Exam", "TestConduct", new { @id = item.PaperId }, new { @class = "btn btn-danger mt-2 px-2 py-1 w-100" })
+				</div>
+			</div>
+		</div>
+	}
+
+</div>

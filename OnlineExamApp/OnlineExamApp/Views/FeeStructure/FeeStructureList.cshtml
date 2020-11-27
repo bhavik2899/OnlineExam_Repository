@@ -1,0 +1,55 @@
+﻿@model IEnumerable<OnlineExamApp.Models.FeeStructureModel>
+@{
+	ViewBag.Title = "FeeStructureList";
+}
+
+<div class="d-flex justify-content-between mb-2">
+	<h2 class="page-title">Fee Structure List</h2>
+	@Html.ActionLink("Add Fee_Structure", "AddEditFeeStructure", "FeeStructure", new { @class = "btn btn-danger mt-2 px-2 py-1 h-50" })
+</div>
+
+<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+	<thead>
+		<tr>
+			<th class="th">
+				Sr.
+			</th>
+			<th class="th">
+				@Html.Label("Structure Name")
+			</th>
+			<th class="th">
+				@Html.Label("Total Fee")
+			</th>
+			<th class="th">
+				@Html.Label("Start Date")
+			</th>
+			<th class="th">
+				@Html.Label("End Date")
+			</th>
+		</tr>
+	</thead>
+	@{ int count = 1; }
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>@count</td>
+			<td>
+				@Html.DisplayFor(m => item.StructurName)
+			</td>
+			<td>
+				@Html.DisplayFor(m => item.TotalFee)
+			</td>
+			<td>
+				@Html.DisplayFor(m => item.StartDate)
+			</td>
+			<td>
+				@Html.DisplayFor(m => item.EndDate)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "AddEditFeeStructure", new { @id = item.FeeStructurId }, new { @class = "btn btn-secondary px-2 py-0 mr-2" })
+				@Html.ActionLink("Delete", "DeleteFeeStructure", new { @id = item.FeeStructurId }, new { @class = "btn btn-secondary px-2 py-0 ", onclick = "return confirm('Are you sure you wish to delete this Fee Structure Details?');" })
+			</td>
+		</tr>
+		count++;
+	}
+</table>

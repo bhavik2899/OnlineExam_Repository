@@ -1,0 +1,1535 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OnlineExamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FeeHead">
+          <Key>
+            <PropertyRef Name="PK_FeeHeadId" />
+          </Key>
+          <Property Name="PK_FeeHeadId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HeadName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsOptional" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FeeStructur">
+          <Key>
+            <PropertyRef Name="PK_FeeStructurId" />
+          </Key>
+          <Property Name="PK_FeeStructurId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StructurName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalFee" Type="money" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FeeStructurHead">
+          <Key>
+            <PropertyRef Name="PK_FeeStructurHeadId" />
+          </Key>
+          <Property Name="PK_FeeStructurHeadId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_FeeStructurId" Type="bigint" />
+          <Property Name="FK_FeeHeadId" Type="bigint" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="IsOptional" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaperMaster">
+          <Key>
+            <PropertyRef Name="PK_PaperMasterId" />
+          </Key>
+          <Property Name="PK_PaperMasterId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Details" Type="nvarchar" MaxLength="200" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="ExamDate" Type="date" />
+          <Property Name="NoOfQuestion" Type="int" />
+          <Property Name="TotalMarks" Type="int" />
+          <Property Name="PassingMarks" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaperQueMaster">
+          <Key>
+            <PropertyRef Name="PK_PaperQueMasterId" />
+          </Key>
+          <Property Name="PK_PaperQueMasterId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_PaperMasterId" Type="bigint" Nullable="false" />
+          <Property Name="FK_QueMasterId" Type="bigint" />
+          <Property Name="OrderNo" Type="int" />
+        </EntityType>
+        <EntityType Name="QueMaster">
+          <Key>
+            <PropertyRef Name="PK_QueMasterId" />
+          </Key>
+          <Property Name="PK_QueMasterId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Details" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnsId" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsMultichoice" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QueOptionMaster">
+          <Key>
+            <PropertyRef Name="PK_QueOptionMasterId" />
+          </Key>
+          <Property Name="PK_QueOptionMasterId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_QueMasterId" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OrderNo" Type="int" />
+          <Property Name="Details" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="PK_StudentId" />
+          </Key>
+          <Property Name="PK_StudentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
+          <Property Name="Standard" Type="int" Nullable="false" />
+          <Property Name="Division" Type="nvarchar" MaxLength="10" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentFeeCollection">
+          <Key>
+            <PropertyRef Name="PK_StudentFeeCollectionId" />
+          </Key>
+          <Property Name="PK_StudentFeeCollectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_StudentId" Type="bigint" Nullable="false" />
+          <Property Name="FK_StudentFeeScheduleId" Type="bigint" Nullable="false" />
+          <Property Name="FK_FeeStructurId" Type="bigint" Nullable="false" />
+          <Property Name="PaidAmount" Type="money" Nullable="false" />
+          <Property Name="FeePaidDate" Type="date" Nullable="false" />
+          <Property Name="FeeCancellationDate" Type="date" />
+          <Property Name="SeqNo" Type="int" />
+          <Property Name="ReceiptNO" Type="bigint" />
+        </EntityType>
+        <EntityType Name="StudentFeeCollectionHead">
+          <Key>
+            <PropertyRef Name="PK_StudentFeeCollectionHeadId" />
+          </Key>
+          <Property Name="PK_StudentFeeCollectionHeadId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_StudentFeeCollectionId" Type="bigint" Nullable="false" />
+          <Property Name="FK_StudentId" Type="bigint" Nullable="false" />
+          <Property Name="FK_StudentFeeScheduleId" Type="bigint" Nullable="false" />
+          <Property Name="PaidAmount" Type="money" Nullable="false" />
+          <Property Name="FK_FeeHeadId" Type="bigint" />
+          <Property Name="PaidDate" Type="date" />
+          <Property Name="IsFeeCancel" Type="bit" />
+        </EntityType>
+        <EntityType Name="StudentFeeSchedule">
+          <Key>
+            <PropertyRef Name="PK_StudentFeeScheduleId" />
+          </Key>
+          <Property Name="PK_StudentFeeScheduleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TotalFeeAmount" Type="money" />
+          <Property Name="ScheduleDate" Type="date" Nullable="false" />
+          <Property Name="DiscountAmountPercentage" Type="int" />
+          <Property Name="TotalPayableAmount" Type="money" />
+          <Property Name="FK_StudentID" Type="bigint" Nullable="false" />
+          <Property Name="FK_FeeStructurId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="TestConductAns">
+          <Key>
+            <PropertyRef Name="PK_TestConductAnsId" />
+          </Key>
+          <Property Name="PK_TestConductAnsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_TestConductMasterId" Type="bigint" Nullable="false" />
+          <Property Name="FK_QueMasterId" Type="bigint" Nullable="false" />
+          <Property Name="SelectedAnsOptionId" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TestConductMaster">
+          <Key>
+            <PropertyRef Name="PK_TestConductMasterId" />
+          </Key>
+          <Property Name="PK_TestConductMasterId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="int" />
+          <Property Name="ConductDateTime" Type="datetime" />
+          <Property Name="FK_PaperMasterId" Type="bigint" />
+          <Property Name="ResultMarks" Type="bigint" />
+        </EntityType>
+        <Association Name="FK__FeeStruct__FK_Fe__68487DD7">
+          <End Role="FeeStructur" Type="Self.FeeStructur" Multiplicity="0..1" />
+          <End Role="FeeStructurHead" Type="Self.FeeStructurHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeStructur">
+              <PropertyRef Name="PK_FeeStructurId" />
+            </Principal>
+            <Dependent Role="FeeStructurHead">
+              <PropertyRef Name="FK_FeeStructurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeeStruct__FK_Fe__693CA210">
+          <End Role="FeeHead" Type="Self.FeeHead" Multiplicity="0..1" />
+          <End Role="FeeStructurHead" Type="Self.FeeStructurHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeHead">
+              <PropertyRef Name="PK_FeeHeadId" />
+            </Principal>
+            <Dependent Role="FeeStructurHead">
+              <PropertyRef Name="FK_FeeHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaperQueM__FK_Pa__3F466844">
+          <End Role="PaperMaster" Type="Self.PaperMaster" Multiplicity="1" />
+          <End Role="PaperQueMaster" Type="Self.PaperQueMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaperMaster">
+              <PropertyRef Name="PK_PaperMasterId" />
+            </Principal>
+            <Dependent Role="PaperQueMaster">
+              <PropertyRef Name="FK_PaperMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaperQueM__FK_Qu__403A8C7D">
+          <End Role="QueMaster" Type="Self.QueMaster" Multiplicity="0..1" />
+          <End Role="PaperQueMaster" Type="Self.PaperQueMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueMaster">
+              <PropertyRef Name="PK_QueMasterId" />
+            </Principal>
+            <Dependent Role="PaperQueMaster">
+              <PropertyRef Name="FK_QueMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QueOption__FK_Qu__3A81B327">
+          <End Role="QueMaster" Type="Self.QueMaster" Multiplicity="1" />
+          <End Role="QueOptionMaster" Type="Self.QueOptionMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueMaster">
+              <PropertyRef Name="PK_QueMasterId" />
+            </Principal>
+            <Dependent Role="QueOptionMaster">
+              <PropertyRef Name="FK_QueMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_Fe__04E4BC85">
+          <End Role="FeeStructur" Type="Self.FeeStructur" Multiplicity="0..1" />
+          <End Role="StudentFeeSchedule" Type="Self.StudentFeeSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeStructur">
+              <PropertyRef Name="PK_FeeStructurId" />
+            </Principal>
+            <Dependent Role="StudentFeeSchedule">
+              <PropertyRef Name="FK_FeeStructurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_Fe__787EE5A0">
+          <End Role="FeeStructur" Type="Self.FeeStructur" Multiplicity="1" />
+          <End Role="StudentFeeCollection" Type="Self.StudentFeeCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeStructur">
+              <PropertyRef Name="PK_FeeStructurId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollection">
+              <PropertyRef Name="FK_FeeStructurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_Fe__7E37BEF6">
+          <End Role="FeeHead" Type="Self.FeeHead" Multiplicity="0..1" />
+          <End Role="StudentFeeCollectionHead" Type="Self.StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeHead">
+              <PropertyRef Name="PK_FeeHeadId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_FeeHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__6C190EBB">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentFeeSchedule" Type="Self.StudentFeeSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="PK_StudentId" />
+            </Principal>
+            <Dependent Role="StudentFeeSchedule">
+              <PropertyRef Name="FK_StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__76969D2E">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentFeeCollection" Type="Self.StudentFeeCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="PK_StudentId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollection">
+              <PropertyRef Name="FK_StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__778AC167">
+          <End Role="StudentFeeSchedule" Type="Self.StudentFeeSchedule" Multiplicity="1" />
+          <End Role="StudentFeeCollection" Type="Self.StudentFeeCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentFeeSchedule">
+              <PropertyRef Name="PK_StudentFeeScheduleId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollection">
+              <PropertyRef Name="FK_StudentFeeScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__7B5B524B">
+          <End Role="StudentFeeCollection" Type="Self.StudentFeeCollection" Multiplicity="1" />
+          <End Role="StudentFeeCollectionHead" Type="Self.StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentFeeCollection">
+              <PropertyRef Name="PK_StudentFeeCollectionId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_StudentFeeCollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__7C4F7684">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentFeeCollectionHead" Type="Self.StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="PK_StudentId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__7D439ABD">
+          <End Role="StudentFeeSchedule" Type="Self.StudentFeeSchedule" Multiplicity="1" />
+          <End Role="StudentFeeCollectionHead" Type="Self.StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentFeeSchedule">
+              <PropertyRef Name="PK_StudentFeeScheduleId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_StudentFeeScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestCondu__FK_Pa__52593CB8">
+          <End Role="PaperMaster" Type="Self.PaperMaster" Multiplicity="0..1" />
+          <End Role="TestConductMaster" Type="Self.TestConductMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaperMaster">
+              <PropertyRef Name="PK_PaperMasterId" />
+            </Principal>
+            <Dependent Role="TestConductMaster">
+              <PropertyRef Name="FK_PaperMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestCondu__FK_Qu__45F365D3">
+          <End Role="QueMaster" Type="Self.QueMaster" Multiplicity="1" />
+          <End Role="TestConductAns" Type="Self.TestConductAns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueMaster">
+              <PropertyRef Name="PK_QueMasterId" />
+            </Principal>
+            <Dependent Role="TestConductAns">
+              <PropertyRef Name="FK_QueMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestCondu__FK_Te__44FF419A">
+          <End Role="TestConductMaster" Type="Self.TestConductMaster" Multiplicity="1" />
+          <End Role="TestConductAns" Type="Self.TestConductAns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestConductMaster">
+              <PropertyRef Name="PK_TestConductMasterId" />
+            </Principal>
+            <Dependent Role="TestConductAns">
+              <PropertyRef Name="FK_TestConductMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_GetPaperByPrimaryKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_GetPaperList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetQueByPaperID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_GetQuestionByPaperID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Sp_GetStudentFeeCollectionByFeeStructure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentId" Type="bigint" Mode="In" />
+          <Parameter Name="feeStructureId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Sp_GetStudentFeeCollectionByStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Sp_GetStudentFeeScheduleByFeeStructureID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="feeStructureId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Sp_GetWholeFeeStructureByPK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="feeStructureId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertTestConduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="nvarchar" Mode="In" />
+          <Parameter Name="age" Type="int" Mode="In" />
+          <Parameter Name="conductDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+          <Parameter Name="questionAns" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Sp_InsertUpdateFeeStructure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="feeStructureId" Type="bigint" Mode="In" />
+          <Parameter Name="structureName" Type="nvarchar" Mode="In" />
+          <Parameter Name="startDate" Type="date" Mode="In" />
+          <Parameter Name="endDate" Type="date" Mode="In" />
+          <Parameter Name="feeStructureHead" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertUpdatePaper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+          <Parameter Name="title" Type="nvarchar" Mode="In" />
+          <Parameter Name="details" Type="nvarchar" Mode="In" />
+          <Parameter Name="examDate" Type="date" Mode="In" />
+          <Parameter Name="startDate" Type="time" Mode="In" />
+          <Parameter Name="endDate" Type="time" Mode="In" />
+          <Parameter Name="totalMarks" Type="int" Mode="In" />
+          <Parameter Name="passingMarks" Type="int" Mode="In" />
+          <Parameter Name="questions" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertUpdateQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="queId" Type="bigint" Mode="In" />
+          <Parameter Name="title" Type="nvarchar" Mode="In" />
+          <Parameter Name="details" Type="nvarchar" Mode="In" />
+          <Parameter Name="isMultiChoice" Type="bit" Mode="In" />
+          <Parameter Name="options" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Sp_InsertUpdateStudentFeeCollection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentId" Type="bigint" Mode="In" />
+          <Parameter Name="feeStructureId" Type="bigint" Mode="In" />
+          <Parameter Name="feeScheduleId" Type="bigint" Mode="In" />
+          <Parameter Name="paidDate" Type="date" Mode="In" />
+          <Parameter Name="studentFeeCollection" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Sp_InsertUpdateStudentFeeSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentFeeSchedule" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="sp_PaperCompareTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+          <Parameter Name="time" Type="time" Mode="In" />
+        </Function>
+        <Function Name="sp_PaperListByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Sp_Report_Student_FeeCollection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ResultReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_StudentTestSolution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_StudentTestSolution2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_TestSolution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paperId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="String" Type="nvarchar" Mode="In" />
+          <Parameter Name="Delimiter" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="OptionId" Type="bigint" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="OnlineExamModelStoreContainer">
+          <EntitySet Name="FeeHead" EntityType="Self.FeeHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeeStructur" EntityType="Self.FeeStructur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeeStructurHead" EntityType="Self.FeeStructurHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaperMaster" EntityType="Self.PaperMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaperQueMaster" EntityType="Self.PaperQueMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QueMaster" EntityType="Self.QueMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QueOptionMaster" EntityType="Self.QueOptionMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentFeeCollection" EntityType="Self.StudentFeeCollection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentFeeCollectionHead" EntityType="Self.StudentFeeCollectionHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentFeeSchedule" EntityType="Self.StudentFeeSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestConductAns" EntityType="Self.TestConductAns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestConductMaster" EntityType="Self.TestConductMaster" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FeeStruct__FK_Fe__68487DD7" Association="Self.FK__FeeStruct__FK_Fe__68487DD7">
+            <End Role="FeeStructur" EntitySet="FeeStructur" />
+            <End Role="FeeStructurHead" EntitySet="FeeStructurHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeeStruct__FK_Fe__693CA210" Association="Self.FK__FeeStruct__FK_Fe__693CA210">
+            <End Role="FeeHead" EntitySet="FeeHead" />
+            <End Role="FeeStructurHead" EntitySet="FeeStructurHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaperQueM__FK_Pa__3F466844" Association="Self.FK__PaperQueM__FK_Pa__3F466844">
+            <End Role="PaperMaster" EntitySet="PaperMaster" />
+            <End Role="PaperQueMaster" EntitySet="PaperQueMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaperQueM__FK_Qu__403A8C7D" Association="Self.FK__PaperQueM__FK_Qu__403A8C7D">
+            <End Role="QueMaster" EntitySet="QueMaster" />
+            <End Role="PaperQueMaster" EntitySet="PaperQueMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QueOption__FK_Qu__3A81B327" Association="Self.FK__QueOption__FK_Qu__3A81B327">
+            <End Role="QueMaster" EntitySet="QueMaster" />
+            <End Role="QueOptionMaster" EntitySet="QueOptionMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_Fe__04E4BC85" Association="Self.FK__StudentFe__FK_Fe__04E4BC85">
+            <End Role="FeeStructur" EntitySet="FeeStructur" />
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_Fe__787EE5A0" Association="Self.FK__StudentFe__FK_Fe__787EE5A0">
+            <End Role="FeeStructur" EntitySet="FeeStructur" />
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_Fe__7E37BEF6" Association="Self.FK__StudentFe__FK_Fe__7E37BEF6">
+            <End Role="FeeHead" EntitySet="FeeHead" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__6C190EBB" Association="Self.FK__StudentFe__FK_St__6C190EBB">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__76969D2E" Association="Self.FK__StudentFe__FK_St__76969D2E">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__778AC167" Association="Self.FK__StudentFe__FK_St__778AC167">
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedule" />
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__7B5B524B" Association="Self.FK__StudentFe__FK_St__7B5B524B">
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollection" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__7C4F7684" Association="Self.FK__StudentFe__FK_St__7C4F7684">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__7D439ABD" Association="Self.FK__StudentFe__FK_St__7D439ABD">
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedule" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestCondu__FK_Pa__52593CB8" Association="Self.FK__TestCondu__FK_Pa__52593CB8">
+            <End Role="PaperMaster" EntitySet="PaperMaster" />
+            <End Role="TestConductMaster" EntitySet="TestConductMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestCondu__FK_Qu__45F365D3" Association="Self.FK__TestCondu__FK_Qu__45F365D3">
+            <End Role="QueMaster" EntitySet="QueMaster" />
+            <End Role="TestConductAns" EntitySet="TestConductAns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestCondu__FK_Te__44FF419A" Association="Self.FK__TestCondu__FK_Te__44FF419A">
+            <End Role="TestConductMaster" EntitySet="TestConductMaster" />
+            <End Role="TestConductAns" EntitySet="TestConductAns" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OnlineExamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OnlineExamEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PaperMasters" EntityType="OnlineExamModel.PaperMaster" />
+          <EntitySet Name="PaperQueMasters" EntityType="OnlineExamModel.PaperQueMaster" />
+          <EntitySet Name="QueMasters" EntityType="OnlineExamModel.QueMaster" />
+          <EntitySet Name="QueOptionMasters" EntityType="OnlineExamModel.QueOptionMaster" />
+          <EntitySet Name="TestConductAns" EntityType="OnlineExamModel.TestConductAn" />
+          <AssociationSet Name="FK__PaperQueM__FK_Pa__3F466844" Association="OnlineExamModel.FK__PaperQueM__FK_Pa__3F466844">
+            <End Role="PaperMaster" EntitySet="PaperMasters" />
+            <End Role="PaperQueMaster" EntitySet="PaperQueMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaperQueM__FK_Qu__403A8C7D" Association="OnlineExamModel.FK__PaperQueM__FK_Qu__403A8C7D">
+            <End Role="QueMaster" EntitySet="QueMasters" />
+            <End Role="PaperQueMaster" EntitySet="PaperQueMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QueOption__FK_Qu__3A81B327" Association="OnlineExamModel.FK__QueOption__FK_Qu__3A81B327">
+            <End Role="QueMaster" EntitySet="QueMasters" />
+            <End Role="QueOptionMaster" EntitySet="QueOptionMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestCondu__FK_Qu__45F365D3" Association="OnlineExamModel.FK__TestCondu__FK_Qu__45F365D3">
+            <End Role="QueMaster" EntitySet="QueMasters" />
+            <End Role="TestConductAn" EntitySet="TestConductAns" />
+          </AssociationSet>
+          <FunctionImport Name="sp_InsertUpdatePaper">
+            <Parameter Name="paperId" Mode="In" Type="Int64" />
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="details" Mode="In" Type="String" />
+            <Parameter Name="examDate" Mode="In" Type="DateTime" />
+            <Parameter Name="startDate" Mode="In" Type="Time" />
+            <Parameter Name="endDate" Mode="In" Type="Time" />
+            <Parameter Name="totalMarks" Mode="In" Type="Int32" />
+            <Parameter Name="passingMarks" Mode="In" Type="Int32" />
+            <Parameter Name="questions" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetQuestionByPaperID" ReturnType="Collection(OnlineExamModel.sp_GetQuestionByPaperID_Result)">
+          <Parameter Name="paperId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetPaperList" ReturnType="Collection(OnlineExamModel.sp_GetPaperList_Result)" />
+          <FunctionImport Name="sp_GetPaperByPrimaryKey" ReturnType="Collection(OnlineExamModel.sp_GetPaperByPrimaryKey_Result)">
+          <Parameter Name="paperId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PaperCompareTime" ReturnType="Collection(Int64)">
+            <Parameter Name="paperId" Mode="In" Type="Int64" />
+            <Parameter Name="time" Mode="In" Type="Time" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetQueByPaperID" ReturnType="Collection(String)">
+          <Parameter Name="paperId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertTestConduct">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="Int32" />
+            <Parameter Name="conductDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="paperId" Mode="In" Type="Int64" />
+            <Parameter Name="questionAns" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertUpdateQuestion">
+            <Parameter Name="queId" Mode="In" Type="Int64" />
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="details" Mode="In" Type="String" />
+            <Parameter Name="isMultiChoice" Mode="In" Type="Boolean" />
+            <Parameter Name="options" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ResultReport" ReturnType="Collection(OnlineExamModel.sp_ResultReport_Result)">
+          <Parameter Name="paperId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TestSolution" ReturnType="Collection(String)">
+          <Parameter Name="paperId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="TestConductMasters" EntityType="OnlineExamModel.TestConductMaster" />
+          <AssociationSet Name="FK__TestCondu__FK_Pa__52593CB8" Association="OnlineExamModel.FK__TestCondu__FK_Pa__52593CB8">
+            <End Role="PaperMaster" EntitySet="PaperMasters" />
+            <End Role="TestConductMaster" EntitySet="TestConductMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestCondu__FK_Te__44FF419A" Association="OnlineExamModel.FK__TestCondu__FK_Te__44FF419A">
+            <End Role="TestConductMaster" EntitySet="TestConductMasters" />
+            <End Role="TestConductAn" EntitySet="TestConductAns" />
+          </AssociationSet>
+          <FunctionImport Name="SplitString" IsComposable="true" ReturnType="Collection(Int64)">
+            <Parameter Name="String" Mode="In" Type="String" />
+            <Parameter Name="Delimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_StudentTestSolution2" ReturnType="Collection(OnlineExamModel.sp_StudentTestSolution2_Result)">
+          <Parameter Name="paperId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_StudentTestSolution" ReturnType="Collection(String)">
+          <Parameter Name="paperId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PaperListByDate" ReturnType="Collection(OnlineExamModel.sp_PaperListByDate_Result)">
+          <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="FeeHeads" EntityType="OnlineExamModel.FeeHead" />
+          <EntitySet Name="FeeStructurs" EntityType="OnlineExamModel.FeeStructur" />
+          <EntitySet Name="FeeStructurHeads" EntityType="OnlineExamModel.FeeStructurHead" />
+          <EntitySet Name="Students" EntityType="OnlineExamModel.Student" />
+          <EntitySet Name="StudentFeeCollections" EntityType="OnlineExamModel.StudentFeeCollection" />
+          <EntitySet Name="StudentFeeCollectionHeads" EntityType="OnlineExamModel.StudentFeeCollectionHead" />
+          <AssociationSet Name="FK__FeeStruct__FK_Fe__693CA210" Association="OnlineExamModel.FK__FeeStruct__FK_Fe__693CA210">
+            <End Role="FeeHead" EntitySet="FeeHeads" />
+            <End Role="FeeStructurHead" EntitySet="FeeStructurHeads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_Fe__7E37BEF6" Association="OnlineExamModel.FK__StudentFe__FK_Fe__7E37BEF6">
+            <End Role="FeeHead" EntitySet="FeeHeads" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHeads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeeStruct__FK_Fe__68487DD7" Association="OnlineExamModel.FK__FeeStruct__FK_Fe__68487DD7">
+            <End Role="FeeStructur" EntitySet="FeeStructurs" />
+            <End Role="FeeStructurHead" EntitySet="FeeStructurHeads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_Fe__787EE5A0" Association="OnlineExamModel.FK__StudentFe__FK_Fe__787EE5A0">
+            <End Role="FeeStructur" EntitySet="FeeStructurs" />
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollections" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__76969D2E" Association="OnlineExamModel.FK__StudentFe__FK_St__76969D2E">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollections" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__7C4F7684" Association="OnlineExamModel.FK__StudentFe__FK_St__7C4F7684">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHeads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__7B5B524B" Association="OnlineExamModel.FK__StudentFe__FK_St__7B5B524B">
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollections" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHeads" />
+          </AssociationSet>
+          <FunctionImport Name="Sp_GetWholeFeeStructureByPK" ReturnType="Collection(OnlineExamModel.Sp_GetWholeFeeStructureByPK_Result)">
+          <Parameter Name="feeStructureId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_InsertUpdateFeeStructure">
+            <Parameter Name="feeStructureId" Mode="In" Type="Int64" />
+            <Parameter Name="structureName" Mode="In" Type="String" />
+            <Parameter Name="startDate" Mode="In" Type="DateTime" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+            <Parameter Name="feeStructureHead" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="StudentFeeSchedules" EntityType="OnlineExamModel.StudentFeeSchedule" />
+          <AssociationSet Name="FK__StudentFe__FK_Fe__04E4BC85" Association="OnlineExamModel.FK__StudentFe__FK_Fe__04E4BC85">
+            <End Role="FeeStructur" EntitySet="FeeStructurs" />
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__6C190EBB" Association="OnlineExamModel.FK__StudentFe__FK_St__6C190EBB">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__778AC167" Association="OnlineExamModel.FK__StudentFe__FK_St__778AC167">
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedules" />
+            <End Role="StudentFeeCollection" EntitySet="StudentFeeCollections" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__FK_St__7D439ABD" Association="OnlineExamModel.FK__StudentFe__FK_St__7D439ABD">
+            <End Role="StudentFeeSchedule" EntitySet="StudentFeeSchedules" />
+            <End Role="StudentFeeCollectionHead" EntitySet="StudentFeeCollectionHeads" />
+          </AssociationSet>
+          <FunctionImport Name="Sp_InsertUpdateStudentFeeSchedule">
+          <Parameter Name="studentFeeSchedule" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_InsertUpdateStudentFeeCollection">
+            <Parameter Name="studentId" Mode="In" Type="Int64" />
+            <Parameter Name="feeStructureId" Mode="In" Type="Int64" />
+            <Parameter Name="feeScheduleId" Mode="In" Type="Int64" />
+            <Parameter Name="paidDate" Mode="In" Type="DateTime" />
+            <Parameter Name="studentFeeCollection" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_GetStudentFeeCollectionByStudent" ReturnType="Collection(OnlineExamModel.Sp_GetStudentFeeCollectionByStudent_Result)">
+          <Parameter Name="studentId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_GetStudentFeeScheduleByFeeStructureID" ReturnType="Collection(OnlineExamModel.Sp_GetStudentFeeScheduleByFeeStructureID_Result)">
+          <Parameter Name="feeStructureId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_GetStudentFeeCollectionByFeeStructure" ReturnType="Collection(OnlineExamModel.Sp_GetStudentFeeCollectionByFeeStructure_Result)">
+            <Parameter Name="studentId" Mode="In" Type="Int64" />
+            <Parameter Name="feeStructureId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_Report_Student_FeeCollection" />
+        </EntityContainer>
+        <EntityType Name="PaperMaster">
+          <Key>
+            <PropertyRef Name="PK_PaperMasterId" />
+          </Key>
+          <Property Name="PK_PaperMasterId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Details" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="ExamDate" Type="DateTime" Precision="0" />
+          <Property Name="NoOfQuestion" Type="Int32" />
+          <Property Name="TotalMarks" Type="Int32" />
+          <Property Name="PassingMarks" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PaperQueMasters" Relationship="OnlineExamModel.FK__PaperQueM__FK_Pa__3F466844" FromRole="PaperMaster" ToRole="PaperQueMaster" />
+          <NavigationProperty Name="TestConductMasters" Relationship="OnlineExamModel.FK__TestCondu__FK_Pa__52593CB8" FromRole="PaperMaster" ToRole="TestConductMaster" />
+        </EntityType>
+        <EntityType Name="PaperQueMaster">
+          <Key>
+            <PropertyRef Name="PK_PaperQueMasterId" />
+          </Key>
+          <Property Name="PK_PaperQueMasterId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_PaperMasterId" Type="Int64" Nullable="false" />
+          <Property Name="FK_QueMasterId" Type="Int64" />
+          <Property Name="OrderNo" Type="Int32" />
+          <NavigationProperty Name="PaperMaster" Relationship="OnlineExamModel.FK__PaperQueM__FK_Pa__3F466844" FromRole="PaperQueMaster" ToRole="PaperMaster" />
+          <NavigationProperty Name="QueMaster" Relationship="OnlineExamModel.FK__PaperQueM__FK_Qu__403A8C7D" FromRole="PaperQueMaster" ToRole="QueMaster" />
+        </EntityType>
+        <EntityType Name="QueMaster">
+          <Key>
+            <PropertyRef Name="PK_QueMasterId" />
+          </Key>
+          <Property Name="PK_QueMasterId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Details" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnsId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsMultichoice" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PaperQueMasters" Relationship="OnlineExamModel.FK__PaperQueM__FK_Qu__403A8C7D" FromRole="QueMaster" ToRole="PaperQueMaster" />
+          <NavigationProperty Name="QueOptionMasters" Relationship="OnlineExamModel.FK__QueOption__FK_Qu__3A81B327" FromRole="QueMaster" ToRole="QueOptionMaster" />
+          <NavigationProperty Name="TestConductAns" Relationship="OnlineExamModel.FK__TestCondu__FK_Qu__45F365D3" FromRole="QueMaster" ToRole="TestConductAn" />
+        </EntityType>
+        <EntityType Name="QueOptionMaster">
+          <Key>
+            <PropertyRef Name="PK_QueOptionMasterId" />
+          </Key>
+          <Property Name="PK_QueOptionMasterId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_QueMasterId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNo" Type="Int32" />
+          <Property Name="Details" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="QueMaster" Relationship="OnlineExamModel.FK__QueOption__FK_Qu__3A81B327" FromRole="QueOptionMaster" ToRole="QueMaster" />
+        </EntityType>
+        <EntityType Name="TestConductAn">
+          <Key>
+            <PropertyRef Name="PK_TestConductAnsId" />
+          </Key>
+          <Property Name="PK_TestConductAnsId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_TestConductMasterId" Type="Int64" Nullable="false" />
+          <Property Name="FK_QueMasterId" Type="Int64" Nullable="false" />
+          <Property Name="SelectedAnsOptionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QueMaster" Relationship="OnlineExamModel.FK__TestCondu__FK_Qu__45F365D3" FromRole="TestConductAn" ToRole="QueMaster" />
+          <NavigationProperty Name="TestConductMaster" Relationship="OnlineExamModel.FK__TestCondu__FK_Te__44FF419A" FromRole="TestConductAn" ToRole="TestConductMaster" />
+        </EntityType>
+        <Association Name="FK__PaperQueM__FK_Pa__3F466844">
+          <End Type="OnlineExamModel.PaperMaster" Role="PaperMaster" Multiplicity="1" />
+          <End Type="OnlineExamModel.PaperQueMaster" Role="PaperQueMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaperMaster">
+              <PropertyRef Name="PK_PaperMasterId" />
+            </Principal>
+            <Dependent Role="PaperQueMaster">
+              <PropertyRef Name="FK_PaperMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaperQueM__FK_Qu__403A8C7D">
+          <End Type="OnlineExamModel.QueMaster" Role="QueMaster" Multiplicity="0..1" />
+          <End Type="OnlineExamModel.PaperQueMaster" Role="PaperQueMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueMaster">
+              <PropertyRef Name="PK_QueMasterId" />
+            </Principal>
+            <Dependent Role="PaperQueMaster">
+              <PropertyRef Name="FK_QueMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QueOption__FK_Qu__3A81B327">
+          <End Type="OnlineExamModel.QueMaster" Role="QueMaster" Multiplicity="1" />
+          <End Type="OnlineExamModel.QueOptionMaster" Role="QueOptionMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueMaster">
+              <PropertyRef Name="PK_QueMasterId" />
+            </Principal>
+            <Dependent Role="QueOptionMaster">
+              <PropertyRef Name="FK_QueMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestCondu__FK_Qu__45F365D3">
+          <End Type="OnlineExamModel.QueMaster" Role="QueMaster" Multiplicity="1" />
+          <End Type="OnlineExamModel.TestConductAn" Role="TestConductAn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueMaster">
+              <PropertyRef Name="PK_QueMasterId" />
+            </Principal>
+            <Dependent Role="TestConductAn">
+              <PropertyRef Name="FK_QueMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_GetQuestionByPaperID_Result">
+          <Property Type="Int64" Name="PK_QueMasterId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="OrderNo" Nullable="true" />
+          <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetPaperList_Result">
+          <Property Type="Int64" Name="PK_PaperMasterId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="200" />
+          <Property Type="Time" Name="StartTime" Nullable="true" />
+          <Property Type="Time" Name="EndTime" Nullable="true" />
+          <Property Type="DateTime" Name="ExamDate" Nullable="true" />
+          <Property Type="Int32" Name="NoOfQuestion" Nullable="true" />
+          <Property Type="Int32" Name="TotalMarks" Nullable="true" />
+          <Property Type="Int32" Name="PassingMarks" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_GetPaperByPrimaryKey_Result">
+          <Property Type="Int64" Name="PK_PaperMasterId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="200" />
+          <Property Type="Time" Name="StartTime" Nullable="true" />
+          <Property Type="Time" Name="EndTime" Nullable="true" />
+          <Property Type="DateTime" Name="ExamDate" Nullable="true" />
+          <Property Type="Int32" Name="NoOfQuestion" Nullable="true" />
+          <Property Type="Int32" Name="TotalMarks" Nullable="true" />
+          <Property Type="Int32" Name="PassingMarks" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_ResultReport_Result">
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="TotalMarks" Nullable="true" />
+          <Property Type="Int32" Name="PassingMarks" Nullable="true" />
+          <Property Type="Int64" Name="ResultMarks" Nullable="true" />
+          <Property Type="String" Name="Result" Nullable="false" MaxLength="4" />
+        </ComplexType>
+        <EntityType Name="TestConductMaster">
+          <Key>
+            <PropertyRef Name="PK_TestConductMasterId" />
+          </Key>
+          <Property Name="PK_TestConductMasterId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="ConductDateTime" Type="DateTime" Precision="3" />
+          <Property Name="FK_PaperMasterId" Type="Int64" />
+          <Property Name="ResultMarks" Type="Int64" />
+          <NavigationProperty Name="PaperMaster" Relationship="OnlineExamModel.FK__TestCondu__FK_Pa__52593CB8" FromRole="TestConductMaster" ToRole="PaperMaster" />
+          <NavigationProperty Name="TestConductAns" Relationship="OnlineExamModel.FK__TestCondu__FK_Te__44FF419A" FromRole="TestConductMaster" ToRole="TestConductAn" />
+        </EntityType>
+        <Association Name="FK__TestCondu__FK_Pa__52593CB8">
+          <End Type="OnlineExamModel.PaperMaster" Role="PaperMaster" Multiplicity="0..1" />
+          <End Type="OnlineExamModel.TestConductMaster" Role="TestConductMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaperMaster">
+              <PropertyRef Name="PK_PaperMasterId" />
+            </Principal>
+            <Dependent Role="TestConductMaster">
+              <PropertyRef Name="FK_PaperMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestCondu__FK_Te__44FF419A">
+          <End Type="OnlineExamModel.TestConductMaster" Role="TestConductMaster" Multiplicity="1" />
+          <End Type="OnlineExamModel.TestConductAn" Role="TestConductAn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestConductMaster">
+              <PropertyRef Name="PK_TestConductMasterId" />
+            </Principal>
+            <Dependent Role="TestConductAn">
+              <PropertyRef Name="FK_TestConductMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_StudentTestSolution2_Result">
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="TotalMarks" Nullable="true" />
+          <Property Type="Int32" Name="PassingMarks" Nullable="true" />
+          <Property Type="Int64" Name="ResultMarks" Nullable="true" />
+          <Property Type="String" Name="Result" Nullable="false" MaxLength="4" />
+          <Property Type="Int64" Name="QuestionOrder" Nullable="true" />
+          <Property Type="Int64" Name="PK_QueMasterId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="200" />
+          <Property Type="Boolean" Name="IsMultichoice" Nullable="false" />
+          <Property Type="Int64" Name="OptionOrder" Nullable="true" />
+          <Property Type="Int64" Name="PK_QueOptionMasterId" Nullable="false" />
+          <Property Type="String" Name="OptionTitle" Nullable="false" MaxLength="100" />
+          <Property Type="Boolean" Name="IsCorrect" Nullable="false" />
+          <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_PaperListByDate_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="PK_PaperMasterId" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="FeeHead">
+          <Key>
+            <PropertyRef Name="PK_FeeHeadId" />
+          </Key>
+          <Property Name="PK_FeeHeadId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HeadName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsOptional" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FeeStructurHeads" Relationship="OnlineExamModel.FK__FeeStruct__FK_Fe__693CA210" FromRole="FeeHead" ToRole="FeeStructurHead" />
+          <NavigationProperty Name="StudentFeeCollectionHeads" Relationship="OnlineExamModel.FK__StudentFe__FK_Fe__7E37BEF6" FromRole="FeeHead" ToRole="StudentFeeCollectionHead" />
+        </EntityType>
+        <EntityType Name="FeeStructur">
+          <Key>
+            <PropertyRef Name="PK_FeeStructurId" />
+          </Key>
+          <Property Name="PK_FeeStructurId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StructurName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FeeStructurHeads" Relationship="OnlineExamModel.FK__FeeStruct__FK_Fe__68487DD7" FromRole="FeeStructur" ToRole="FeeStructurHead" />
+          <NavigationProperty Name="StudentFeeCollections" Relationship="OnlineExamModel.FK__StudentFe__FK_Fe__787EE5A0" FromRole="FeeStructur" ToRole="StudentFeeCollection" />
+          <NavigationProperty Name="StudentFeeSchedules" Relationship="OnlineExamModel.FK__StudentFe__FK_Fe__04E4BC85" FromRole="FeeStructur" ToRole="StudentFeeSchedule" />
+        </EntityType>
+        <EntityType Name="FeeStructurHead">
+          <Key>
+            <PropertyRef Name="PK_FeeStructurHeadId" />
+          </Key>
+          <Property Name="PK_FeeStructurHeadId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_FeeStructurId" Type="Int64" />
+          <Property Name="FK_FeeHeadId" Type="Int64" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsOptional" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FeeHead" Relationship="OnlineExamModel.FK__FeeStruct__FK_Fe__693CA210" FromRole="FeeStructurHead" ToRole="FeeHead" />
+          <NavigationProperty Name="FeeStructur" Relationship="OnlineExamModel.FK__FeeStruct__FK_Fe__68487DD7" FromRole="FeeStructurHead" ToRole="FeeStructur" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="PK_StudentId" />
+          </Key>
+          <Property Name="PK_StudentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Standard" Type="Int32" Nullable="false" />
+          <Property Name="Division" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StudentFeeCollections" Relationship="OnlineExamModel.FK__StudentFe__FK_St__76969D2E" FromRole="Student" ToRole="StudentFeeCollection" />
+          <NavigationProperty Name="StudentFeeCollectionHeads" Relationship="OnlineExamModel.FK__StudentFe__FK_St__7C4F7684" FromRole="Student" ToRole="StudentFeeCollectionHead" />
+          <NavigationProperty Name="StudentFeeSchedules" Relationship="OnlineExamModel.FK__StudentFe__FK_St__6C190EBB" FromRole="Student" ToRole="StudentFeeSchedule" />
+        </EntityType>
+        <EntityType Name="StudentFeeCollection">
+          <Key>
+            <PropertyRef Name="PK_StudentFeeCollectionId" />
+          </Key>
+          <Property Name="PK_StudentFeeCollectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_StudentId" Type="Int64" Nullable="false" />
+          <Property Name="FK_StudentFeeScheduleId" Type="Int64" Nullable="false" />
+          <Property Name="FK_FeeStructurId" Type="Int64" Nullable="false" />
+          <Property Name="PaidAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FeePaidDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FeeCancellationDate" Type="DateTime" Precision="0" />
+          <Property Name="SeqNo" Type="Int32" />
+          <Property Name="ReceiptNO" Type="Int64" />
+          <NavigationProperty Name="FeeStructur" Relationship="OnlineExamModel.FK__StudentFe__FK_Fe__787EE5A0" FromRole="StudentFeeCollection" ToRole="FeeStructur" />
+          <NavigationProperty Name="Student" Relationship="OnlineExamModel.FK__StudentFe__FK_St__76969D2E" FromRole="StudentFeeCollection" ToRole="Student" />
+          <NavigationProperty Name="StudentFeeCollectionHeads" Relationship="OnlineExamModel.FK__StudentFe__FK_St__7B5B524B" FromRole="StudentFeeCollection" ToRole="StudentFeeCollectionHead" />
+          <NavigationProperty Name="StudentFeeSchedule" Relationship="OnlineExamModel.FK__StudentFe__FK_St__778AC167" FromRole="StudentFeeCollection" ToRole="StudentFeeSchedule" />
+        </EntityType>
+        <EntityType Name="StudentFeeCollectionHead">
+          <Key>
+            <PropertyRef Name="PK_StudentFeeCollectionHeadId" />
+          </Key>
+          <Property Name="PK_StudentFeeCollectionHeadId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_StudentFeeCollectionId" Type="Int64" Nullable="false" />
+          <Property Name="FK_StudentId" Type="Int64" Nullable="false" />
+          <Property Name="FK_StudentFeeScheduleId" Type="Int64" Nullable="false" />
+          <Property Name="PaidAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FK_FeeHeadId" Type="Int64" />
+          <Property Name="PaidDate" Type="DateTime" Precision="0" />
+          <Property Name="IsFeeCancel" Type="Boolean" />
+          <NavigationProperty Name="FeeHead" Relationship="OnlineExamModel.FK__StudentFe__FK_Fe__7E37BEF6" FromRole="StudentFeeCollectionHead" ToRole="FeeHead" />
+          <NavigationProperty Name="Student" Relationship="OnlineExamModel.FK__StudentFe__FK_St__7C4F7684" FromRole="StudentFeeCollectionHead" ToRole="Student" />
+          <NavigationProperty Name="StudentFeeCollection" Relationship="OnlineExamModel.FK__StudentFe__FK_St__7B5B524B" FromRole="StudentFeeCollectionHead" ToRole="StudentFeeCollection" />
+          <NavigationProperty Name="StudentFeeSchedule" Relationship="OnlineExamModel.FK__StudentFe__FK_St__7D439ABD" FromRole="StudentFeeCollectionHead" ToRole="StudentFeeSchedule" />
+        </EntityType>
+        <Association Name="FK__FeeStruct__FK_Fe__693CA210">
+          <End Type="OnlineExamModel.FeeHead" Role="FeeHead" Multiplicity="0..1" />
+          <End Type="OnlineExamModel.FeeStructurHead" Role="FeeStructurHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeHead">
+              <PropertyRef Name="PK_FeeHeadId" />
+            </Principal>
+            <Dependent Role="FeeStructurHead">
+              <PropertyRef Name="FK_FeeHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_Fe__7E37BEF6">
+          <End Type="OnlineExamModel.FeeHead" Role="FeeHead" Multiplicity="0..1" />
+          <End Type="OnlineExamModel.StudentFeeCollectionHead" Role="StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeHead">
+              <PropertyRef Name="PK_FeeHeadId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_FeeHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeeStruct__FK_Fe__68487DD7">
+          <End Type="OnlineExamModel.FeeStructur" Role="FeeStructur" Multiplicity="0..1" />
+          <End Type="OnlineExamModel.FeeStructurHead" Role="FeeStructurHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeStructur">
+              <PropertyRef Name="PK_FeeStructurId" />
+            </Principal>
+            <Dependent Role="FeeStructurHead">
+              <PropertyRef Name="FK_FeeStructurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_Fe__787EE5A0">
+          <End Type="OnlineExamModel.FeeStructur" Role="FeeStructur" Multiplicity="1" />
+          <End Type="OnlineExamModel.StudentFeeCollection" Role="StudentFeeCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeStructur">
+              <PropertyRef Name="PK_FeeStructurId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollection">
+              <PropertyRef Name="FK_FeeStructurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__76969D2E">
+          <End Type="OnlineExamModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="OnlineExamModel.StudentFeeCollection" Role="StudentFeeCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="PK_StudentId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollection">
+              <PropertyRef Name="FK_StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__7C4F7684">
+          <End Type="OnlineExamModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="OnlineExamModel.StudentFeeCollectionHead" Role="StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="PK_StudentId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__7B5B524B">
+          <End Type="OnlineExamModel.StudentFeeCollection" Role="StudentFeeCollection" Multiplicity="1" />
+          <End Type="OnlineExamModel.StudentFeeCollectionHead" Role="StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentFeeCollection">
+              <PropertyRef Name="PK_StudentFeeCollectionId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_StudentFeeCollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Sp_GetWholeFeeStructureByPK_Result">
+          <Property Type="Int64" Name="PK_FeeHeadId" Nullable="false" />
+          <Property Type="String" Name="HeadName" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="IsOptional" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="19" />
+          <Property Type="Int64" Name="PK_FeeStructurId" Nullable="true" />
+          <Property Type="String" Name="StructurName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="TotalFee" Nullable="true" Precision="19" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="StudentFeeSchedule">
+          <Key>
+            <PropertyRef Name="PK_StudentFeeScheduleId" />
+          </Key>
+          <Property Name="PK_StudentFeeScheduleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TotalFeeAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ScheduleDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DiscountAmountPercentage" Type="Int32" />
+          <Property Name="TotalPayableAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FK_StudentID" Type="Int64" Nullable="false" />
+          <Property Name="FK_FeeStructurId" Type="Int64" />
+          <NavigationProperty Name="FeeStructur" Relationship="OnlineExamModel.FK__StudentFe__FK_Fe__04E4BC85" FromRole="StudentFeeSchedule" ToRole="FeeStructur" />
+          <NavigationProperty Name="Student" Relationship="OnlineExamModel.FK__StudentFe__FK_St__6C190EBB" FromRole="StudentFeeSchedule" ToRole="Student" />
+          <NavigationProperty Name="StudentFeeCollections" Relationship="OnlineExamModel.FK__StudentFe__FK_St__778AC167" FromRole="StudentFeeSchedule" ToRole="StudentFeeCollection" />
+          <NavigationProperty Name="StudentFeeCollectionHeads" Relationship="OnlineExamModel.FK__StudentFe__FK_St__7D439ABD" FromRole="StudentFeeSchedule" ToRole="StudentFeeCollectionHead" />
+        </EntityType>
+        <Association Name="FK__StudentFe__FK_Fe__04E4BC85">
+          <End Type="OnlineExamModel.FeeStructur" Role="FeeStructur" Multiplicity="0..1" />
+          <End Type="OnlineExamModel.StudentFeeSchedule" Role="StudentFeeSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeStructur">
+              <PropertyRef Name="PK_FeeStructurId" />
+            </Principal>
+            <Dependent Role="StudentFeeSchedule">
+              <PropertyRef Name="FK_FeeStructurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__6C190EBB">
+          <End Type="OnlineExamModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="OnlineExamModel.StudentFeeSchedule" Role="StudentFeeSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="PK_StudentId" />
+            </Principal>
+            <Dependent Role="StudentFeeSchedule">
+              <PropertyRef Name="FK_StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__778AC167">
+          <End Type="OnlineExamModel.StudentFeeSchedule" Role="StudentFeeSchedule" Multiplicity="1" />
+          <End Type="OnlineExamModel.StudentFeeCollection" Role="StudentFeeCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentFeeSchedule">
+              <PropertyRef Name="PK_StudentFeeScheduleId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollection">
+              <PropertyRef Name="FK_StudentFeeScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentFe__FK_St__7D439ABD">
+          <End Type="OnlineExamModel.StudentFeeSchedule" Role="StudentFeeSchedule" Multiplicity="1" />
+          <End Type="OnlineExamModel.StudentFeeCollectionHead" Role="StudentFeeCollectionHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentFeeSchedule">
+              <PropertyRef Name="PK_StudentFeeScheduleId" />
+            </Principal>
+            <Dependent Role="StudentFeeCollectionHead">
+              <PropertyRef Name="FK_StudentFeeScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Sp_GetStudentFeeCollectionByStudent_Result">
+          <Property Type="Int64" Name="PK_FeeStructurId" Nullable="false" />
+          <Property Type="String" Name="StructurName" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="PK_StudentFeeScheduleId" Nullable="false" />
+          <Property Type="Decimal" Name="TotalFeeAmount" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="TotalPayableAmount" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="Sp_GetStudentFeeScheduleByFeeStructureID_Result">
+          <Property Type="Int64" Name="FK_FeeStructurId" Nullable="true" />
+          <Property Type="Int64" Name="PK_StudentFeeScheduleId" Nullable="true" />
+          <Property Type="Int32" Name="DiscountAmountPercentage" Nullable="true" />
+          <Property Type="Decimal" Name="TotalPayableAmount" Nullable="true" Precision="19" />
+          <Property Type="Int64" Name="FK_StudentID" Nullable="true" />
+          <Property Type="Boolean" Name="UnPaid" Nullable="true" />
+          <Property Type="Int64" Name="PK_StudentId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Sp_GetStudentFeeCollectionByFeeStructure_Result">
+          <Property Type="Int64" Name="PK_FeeStructurId" Nullable="false" />
+          <Property Type="String" Name="StructurName" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="PK_StudentFeeScheduleId" Nullable="false" />
+          <Property Type="Decimal" Name="TotalFeeAmount" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="TotalPayableAmount" Nullable="true" Precision="19" />
+          <Property Type="Int64" Name="PK_FeeHeadId" Nullable="false" />
+          <Property Type="String" Name="HeadName" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="IsOptional" Nullable="false" />
+          <Property Type="Decimal" Name="AmountByHead" Nullable="true" Precision="19" />
+          <Property Type="Int64" Name="PK_StudentFeeCollectionId" Nullable="true" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="PaidHeadAmount" Nullable="true" Precision="19" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OnlineExamModelStoreContainer" CdmEntityContainer="OnlineExamEntities">
+          <EntitySetMapping Name="PaperMasters">
+            <EntityTypeMapping TypeName="OnlineExamModel.PaperMaster">
+              <MappingFragment StoreEntitySet="PaperMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="NoOfQuestion" ColumnName="NoOfQuestion" />
+                <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaperQueMasters">
+            <EntityTypeMapping TypeName="OnlineExamModel.PaperQueMaster">
+              <MappingFragment StoreEntitySet="PaperQueMaster">
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="FK_QueMasterId" ColumnName="FK_QueMasterId" />
+                <ScalarProperty Name="FK_PaperMasterId" ColumnName="FK_PaperMasterId" />
+                <ScalarProperty Name="PK_PaperQueMasterId" ColumnName="PK_PaperQueMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QueMasters">
+            <EntityTypeMapping TypeName="OnlineExamModel.QueMaster">
+              <MappingFragment StoreEntitySet="QueMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsMultichoice" ColumnName="IsMultichoice" />
+                <ScalarProperty Name="CorrectAnsId" ColumnName="CorrectAnsId" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PK_QueMasterId" ColumnName="PK_QueMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QueOptionMasters">
+            <EntityTypeMapping TypeName="OnlineExamModel.QueOptionMaster">
+              <MappingFragment StoreEntitySet="QueOptionMaster">
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FK_QueMasterId" ColumnName="FK_QueMasterId" />
+                <ScalarProperty Name="PK_QueOptionMasterId" ColumnName="PK_QueOptionMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestConductAns">
+            <EntityTypeMapping TypeName="OnlineExamModel.TestConductAn">
+              <MappingFragment StoreEntitySet="TestConductAns">
+                <ScalarProperty Name="SelectedAnsOptionId" ColumnName="SelectedAnsOptionId" />
+                <ScalarProperty Name="FK_QueMasterId" ColumnName="FK_QueMasterId" />
+                <ScalarProperty Name="FK_TestConductMasterId" ColumnName="FK_TestConductMasterId" />
+                <ScalarProperty Name="PK_TestConductAnsId" ColumnName="PK_TestConductAnsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_InsertUpdatePaper" FunctionName="OnlineExamModel.Store.sp_InsertUpdatePaper" />
+          <FunctionImportMapping FunctionImportName="sp_GetQuestionByPaperID" FunctionName="OnlineExamModel.Store.sp_GetQuestionByPaperID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.sp_GetQuestionByPaperID_Result">
+                <ScalarProperty Name="PK_QueMasterId" ColumnName="PK_QueMasterId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetPaperList" FunctionName="OnlineExamModel.Store.sp_GetPaperList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.sp_GetPaperList_Result">
+                <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+                <ScalarProperty Name="NoOfQuestion" ColumnName="NoOfQuestion" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetPaperByPrimaryKey" FunctionName="OnlineExamModel.Store.sp_GetPaperByPrimaryKey">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.sp_GetPaperByPrimaryKey_Result">
+                <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+                <ScalarProperty Name="NoOfQuestion" ColumnName="NoOfQuestion" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PaperCompareTime" FunctionName="OnlineExamModel.Store.sp_PaperCompareTime" />
+          <FunctionImportMapping FunctionImportName="sp_GetQueByPaperID" FunctionName="OnlineExamModel.Store.sp_GetQueByPaperID" />
+          <FunctionImportMapping FunctionImportName="sp_InsertTestConduct" FunctionName="OnlineExamModel.Store.sp_InsertTestConduct" />
+          <FunctionImportMapping FunctionImportName="sp_InsertUpdateQuestion" FunctionName="OnlineExamModel.Store.sp_InsertUpdateQuestion" />
+          <FunctionImportMapping FunctionImportName="sp_ResultReport" FunctionName="OnlineExamModel.Store.sp_ResultReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.sp_ResultReport_Result">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+                <ScalarProperty Name="ResultMarks" ColumnName="ResultMarks" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TestSolution" FunctionName="OnlineExamModel.Store.sp_TestSolution" />
+          <EntitySetMapping Name="TestConductMasters">
+            <EntityTypeMapping TypeName="OnlineExamModel.TestConductMaster">
+              <MappingFragment StoreEntitySet="TestConductMaster">
+                <ScalarProperty Name="ResultMarks" ColumnName="ResultMarks" />
+                <ScalarProperty Name="FK_PaperMasterId" ColumnName="FK_PaperMasterId" />
+                <ScalarProperty Name="ConductDateTime" ColumnName="ConductDateTime" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PK_TestConductMasterId" ColumnName="PK_TestConductMasterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SplitString" FunctionName="OnlineExamModel.Store.SplitString" />
+          <FunctionImportMapping FunctionImportName="sp_StudentTestSolution2" FunctionName="OnlineExamModel.Store.sp_StudentTestSolution2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.sp_StudentTestSolution2_Result">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+                <ScalarProperty Name="ResultMarks" ColumnName="ResultMarks" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
+                <ScalarProperty Name="PK_QueMasterId" ColumnName="PK_QueMasterId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IsMultichoice" ColumnName="IsMultichoice" />
+                <ScalarProperty Name="OptionOrder" ColumnName="OptionOrder" />
+                <ScalarProperty Name="PK_QueOptionMasterId" ColumnName="PK_QueOptionMasterId" />
+                <ScalarProperty Name="OptionTitle" ColumnName="OptionTitle" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_StudentTestSolution" FunctionName="OnlineExamModel.Store.sp_StudentTestSolution" />
+          <FunctionImportMapping FunctionImportName="sp_PaperListByDate" FunctionName="OnlineExamModel.Store.sp_PaperListByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.sp_PaperListByDate_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PK_PaperMasterId" ColumnName="PK_PaperMasterId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="FeeHeads">
+            <EntityTypeMapping TypeName="OnlineExamModel.FeeHead">
+              <MappingFragment StoreEntitySet="FeeHead">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+                <ScalarProperty Name="HeadName" ColumnName="HeadName" />
+                <ScalarProperty Name="PK_FeeHeadId" ColumnName="PK_FeeHeadId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeeStructurs">
+            <EntityTypeMapping TypeName="OnlineExamModel.FeeStructur">
+              <MappingFragment StoreEntitySet="FeeStructur">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
+                <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+                <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeeStructurHeads">
+            <EntityTypeMapping TypeName="OnlineExamModel.FeeStructurHead">
+              <MappingFragment StoreEntitySet="FeeStructurHead">
+                <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="FK_FeeHeadId" ColumnName="FK_FeeHeadId" />
+                <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+                <ScalarProperty Name="PK_FeeStructurHeadId" ColumnName="PK_FeeStructurHeadId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="OnlineExamModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Standard" ColumnName="Standard" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PK_StudentId" ColumnName="PK_StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentFeeCollections">
+            <EntityTypeMapping TypeName="OnlineExamModel.StudentFeeCollection">
+              <MappingFragment StoreEntitySet="StudentFeeCollection">
+                <ScalarProperty Name="ReceiptNO" ColumnName="ReceiptNO" />
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+                <ScalarProperty Name="FeeCancellationDate" ColumnName="FeeCancellationDate" />
+                <ScalarProperty Name="FeePaidDate" ColumnName="FeePaidDate" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+                <ScalarProperty Name="FK_StudentFeeScheduleId" ColumnName="FK_StudentFeeScheduleId" />
+                <ScalarProperty Name="FK_StudentId" ColumnName="FK_StudentId" />
+                <ScalarProperty Name="PK_StudentFeeCollectionId" ColumnName="PK_StudentFeeCollectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentFeeCollectionHeads">
+            <EntityTypeMapping TypeName="OnlineExamModel.StudentFeeCollectionHead">
+              <MappingFragment StoreEntitySet="StudentFeeCollectionHead">
+                <ScalarProperty Name="IsFeeCancel" ColumnName="IsFeeCancel" />
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+                <ScalarProperty Name="FK_FeeHeadId" ColumnName="FK_FeeHeadId" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="FK_StudentFeeScheduleId" ColumnName="FK_StudentFeeScheduleId" />
+                <ScalarProperty Name="FK_StudentId" ColumnName="FK_StudentId" />
+                <ScalarProperty Name="FK_StudentFeeCollectionId" ColumnName="FK_StudentFeeCollectionId" />
+                <ScalarProperty Name="PK_StudentFeeCollectionHeadId" ColumnName="PK_StudentFeeCollectionHeadId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_GetWholeFeeStructureByPK" FunctionName="OnlineExamModel.Store.Sp_GetWholeFeeStructureByPK">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetWholeFeeStructureByPK_Result">
+                <ScalarProperty Name="PK_FeeHeadId" ColumnName="PK_FeeHeadId" />
+                <ScalarProperty Name="HeadName" ColumnName="HeadName" />
+                <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+                <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+                <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_InsertUpdateFeeStructure" FunctionName="OnlineExamModel.Store.Sp_InsertUpdateFeeStructure" />
+          <EntitySetMapping Name="StudentFeeSchedules">
+            <EntityTypeMapping TypeName="OnlineExamModel.StudentFeeSchedule">
+              <MappingFragment StoreEntitySet="StudentFeeSchedule">
+                <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+                <ScalarProperty Name="FK_StudentID" ColumnName="FK_StudentID" />
+                <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+                <ScalarProperty Name="DiscountAmountPercentage" ColumnName="DiscountAmountPercentage" />
+                <ScalarProperty Name="ScheduleDate" ColumnName="ScheduleDate" />
+                <ScalarProperty Name="TotalFeeAmount" ColumnName="TotalFeeAmount" />
+                <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_InsertUpdateStudentFeeSchedule" FunctionName="OnlineExamModel.Store.Sp_InsertUpdateStudentFeeSchedule" />
+          <FunctionImportMapping FunctionImportName="Sp_InsertUpdateStudentFeeCollection" FunctionName="OnlineExamModel.Store.Sp_InsertUpdateStudentFeeCollection" />
+          <FunctionImportMapping FunctionImportName="Sp_GetStudentFeeCollectionByStudent" FunctionName="OnlineExamModel.Store.Sp_GetStudentFeeCollectionByStudent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetStudentFeeCollectionByStudent_Result">
+                <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+                <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+                <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+                <ScalarProperty Name="TotalFeeAmount" ColumnName="TotalFeeAmount" />
+                <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_GetStudentFeeScheduleByFeeStructureID" FunctionName="OnlineExamModel.Store.Sp_GetStudentFeeScheduleByFeeStructureID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetStudentFeeScheduleByFeeStructureID_Result">
+                <ScalarProperty Name="FK_FeeStructurId" ColumnName="FK_FeeStructurId" />
+                <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+                <ScalarProperty Name="DiscountAmountPercentage" ColumnName="DiscountAmountPercentage" />
+                <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+                <ScalarProperty Name="FK_StudentID" ColumnName="FK_StudentID" />
+                <ScalarProperty Name="UnPaid" ColumnName="UnPaid" />
+                <ScalarProperty Name="PK_StudentId" ColumnName="PK_StudentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_GetStudentFeeCollectionByFeeStructure" FunctionName="OnlineExamModel.Store.Sp_GetStudentFeeCollectionByFeeStructure">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OnlineExamModel.Sp_GetStudentFeeCollectionByFeeStructure_Result">
+                <ScalarProperty Name="PK_FeeStructurId" ColumnName="PK_FeeStructurId" />
+                <ScalarProperty Name="StructurName" ColumnName="StructurName" />
+                <ScalarProperty Name="PK_StudentFeeScheduleId" ColumnName="PK_StudentFeeScheduleId" />
+                <ScalarProperty Name="TotalFeeAmount" ColumnName="TotalFeeAmount" />
+                <ScalarProperty Name="TotalPayableAmount" ColumnName="TotalPayableAmount" />
+                <ScalarProperty Name="PK_FeeHeadId" ColumnName="PK_FeeHeadId" />
+                <ScalarProperty Name="HeadName" ColumnName="HeadName" />
+                <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
+                <ScalarProperty Name="AmountByHead" ColumnName="AmountByHead" />
+                <ScalarProperty Name="PK_StudentFeeCollectionId" ColumnName="PK_StudentFeeCollectionId" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="PaidHeadAmount" ColumnName="PaidHeadAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_Report_Student_FeeCollection" FunctionName="OnlineExamModel.Store.Sp_Report_Student_FeeCollection" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

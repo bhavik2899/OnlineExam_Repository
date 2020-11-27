@@ -1,0 +1,113 @@
+﻿@model OnlineExamApp.Models.FeeStructureModel
+@{
+	ViewBag.Title = "AddEditFeeStructure";
+}
+
+<h2 class="page-title">Add / Edit FeeStructure</h2>
+
+@using (Html.BeginForm("AddEditFeeStructure", "FeeStructure", FormMethod.Post))
+{
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				@Html.LabelFor(m => m.StructurName)
+				@Html.TextBoxFor(m => m.StructurName, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.StructurName, "", new { @class = "text-danger" })
+			</div>
+			@Html.HiddenFor(m=>m.FeeStructurId)
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				@Html.LabelFor(m => m.StartDate)
+				@Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				@Html.LabelFor(m => m.EndDate)
+				@Html.TextBoxFor(m => m.EndDate, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
+			</div>
+		</div>
+	</div>
+
+	<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+		<thead>
+			<tr>
+				<th class="th">
+					Sr.
+				</th>
+				<th class="th">
+					@Html.Label("Head Name")
+				</th>
+				<th class="th">
+					@Html.Label("Amount")
+				</th>
+				<th class="th">
+					@Html.Label("Is Include")
+				</th>
+			</tr>
+		</thead>
+
+		@for (int i = 0; i < Model.feeheads.Count; i++)
+		{
+			@Html.HiddenFor(m => Model.feeheads[i].FeeHeadId)
+			@Html.HiddenFor(m => Model.feeheads[i].IsOptional)
+			<tr>
+				<td>@(i + 1)</td>
+				<td>
+					@Html.DisplayFor(m => Model.feeheads[i].HeadName)
+				</td>
+				<td class="p-1">
+					@Html.TextBoxFor(m => Model.feeheads[i].Amount, new { @type = "Number", @class = "form-control", onchange = "TotalSum()", @isOptional = Model.feeheads[i].IsOptional })
+				</td>
+				<td>
+					@Html.CheckBoxFor(m => Model.feeheads[i].IsInclude, new { @class = "form-control", onclick = "TotalSum()" })
+				</td>
+			</tr>
+		}
+
+		<tr>
+			<td></td>
+			<td><strong>Total Fee </strong></td>
+			<td>@Html.TextBoxFor(m => m.TotalFee, new { @class = "form-control", @readonly = "readonly" })</td>
+			<td></td>
+		</tr>
+	</table>
+
+
+	<div class="row d-flex justify-content-center mt-3">
+		<button type="submit" id="submitBtn" class="btn btn-danger">Save</button>
+	</div>
+}
+
+
+<script type="text/javascript">
+	$(function () {
+		$("#StartDate").datepicker({
+			dateFormat: 'dd-mm-yy'
+		});
+		$("#EndDate").datepicker({
+			dateFormat: 'dd-mm-yy'
+		});
+	});
+
+	function TotalSum() {
+		var totalFee = 0;
+		for(i = 0; i< @Model.feeheads.Count; i++)
+		{
+			if ($("#feeheads_" + i + "__IsInclude").prop('checked') == true) {
+				var amount = $("#feeheads_" + i + "__Amount");
+				var attribute = amount.attr('isoptional');
+				if (attribute == 'False') {
+					totalFee = totalFee + Number(amount.val());
+				}
+			}
+		}
+		$("#TotalFee").val(totalFee);
+	}
+
+</script>
+
+

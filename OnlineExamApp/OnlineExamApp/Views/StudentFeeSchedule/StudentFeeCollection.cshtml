@@ -1,0 +1,88 @@
+﻿@model OnlineExamApp.Models.StudentFeeCollectionModel
+@{
+	ViewBag.Title = "StudentFeeCollection";
+}
+
+<h2 class="page-title">StudentFeeCollection</h2>
+
+<div class="row inner-Shadow p-3 my-2">
+	<div class="col-sm-12">
+		<div class="form-inline d-flex justify-content-center">
+			@Html.LabelFor(m => m.StudentID)
+			@Html.DropDownListFor(m => m.StudentID, new SelectList(Model.StudentList, "Value", "Text"), "Please Select", new { @class = "form-control w-50 ml-3" })
+			@Html.ValidationMessageFor(m => m.StudentID, "", new { @class = "text-danger" })
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+		<table class="w-100 table-bordered box-Shadow p-1 mt-3">
+			<thead>
+				<tr>
+					<th class="th">
+						@Html.Label("Sr")
+					</th>
+					<th class="th">
+						@Html.Label("Fee Structur Name")
+					</th>
+					<th class="th">
+						@Html.Label("Total Fee")
+					</th>
+					<th class="th">
+						@Html.Label("Payable Fee")
+					</th>
+					<th class="th">
+						@Html.Label("Pay Now")
+					</th>
+				</tr>
+			</thead>
+			@for (int i = 0; i < Model.FeeScheduleModelList.Count; i++)
+			{
+				<tr>
+					<td>
+						@(i + 1)
+					</td>
+					<td>
+						@Html.DisplayFor(m => Model.FeeScheduleModelList[i].StructurName)
+						@Html.HiddenFor(m => Model.FeeScheduleModelList[i].FeeStructureId)
+					</td>
+					<td>
+						@Html.DisplayFor(m => Model.FeeScheduleModelList[i].TotalFeeAmount)
+					</td>
+					<td>
+						@Html.DisplayFor(m => Model.FeeScheduleModelList[i].TotalPayableAmount)
+					</td>
+					<td>
+						@if (Model.FeeScheduleModelList[i].TotalPayableAmount > 0)
+						{ 
+							<button type="button" class="btn btn-primary px-2 py-0 mr-2" onclick="LoadFeeStructure(@Model.StudentID,@Model.FeeScheduleModelList[i].FeeStructureId)">Pay</button>
+						}
+					</td>
+				</tr>
+			}
+		</table>
+	</div>
+</div>
+
+<hr />
+<div id="myPartialDiv">
+</div>
+
+<script type="text/javascript">
+
+	$(function () {
+		$("#StudentID").change(function () {
+			var studentID = $("#StudentID").val();
+			var url = "@Url.Action("StudentFeeCollection", "StudentFeeSchedule",  new { @id = "studentID" })";
+			window.location.href = url.replace('studentID', studentID);
+		});		
+	});
+
+	function LoadFeeStructure(studentID, feeId) {
+		var url = '@Url.Action("StudentFeeCollectionPartial", new { id = "studentID" , feeStructureId = "feeId"})';
+		url = url.replace('feeId', feeId )
+		$("#myPartialDiv").load(url.replace('studentID', studentID));
+	}
+
+</script>

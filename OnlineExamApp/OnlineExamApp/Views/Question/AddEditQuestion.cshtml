@@ -1,0 +1,191 @@
+﻿@model OnlineExamApp.Models.QuestionModel
+@{
+	ViewBag.Title = "AddEditQuestion";
+	var count = 1;
+}
+<h2 class="page-title">Add / Edit Question</h2>
+
+@using (Html.BeginForm("AddEditQuestion", "Question", FormMethod.Post, new { @id = "formSubmit" }))
+{
+	@Html.HiddenFor(m => m.OptionRowID, new { @Value = "" })
+	<div class="row">
+		@Html.HiddenFor(x => x.QueId)
+
+		<div class="col-sm-6">
+			<div class="form-group">
+				@Html.LabelFor(m => m.Title)
+				@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				@Html.LabelFor(m => m.Details)
+				@Html.TextAreaFor(m => m.Details, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Details, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				@Html.CheckBoxFor(m => m.IsMultichoice, new { onclick = "Convert()", @class = "mt-2 ml-2" })
+				@Html.LabelFor(m => m.IsMultichoice)
+				@Html.ValidationMessageFor(m => m.IsMultichoice, "", new { @class = "text-danger" })
+			</div>
+		</div>
+	</div>
+
+	<hr />
+	<div class="d-flex justify-content-between mb-2">
+		<h3 class="page-title">Options</h3>
+		@*<button id="addOption" class="btn btn-danger mt-2 px-2 py-1 h-50">Add Option</button>*@
+		<input type="button" value="Add Option" id="addOption" class="btn btn-danger mt-2 px-2 py-1 h-50" />
+	</div>
+
+	<div class="row">
+		<div class="col-sm-4">
+			@Html.Label("Title")
+		</div>
+		<div class="col-sm-4">
+			@Html.Label("Details")
+		</div>
+		<div class="col-sm-1">
+			@Html.Label("IsCorrect")
+		</div>
+		<div class="col-sm-2">
+			@Html.Label("Order No")
+		</div>
+		<div class="col-sm-1">
+		</div>
+	</div>
+	<div id="optionContainer">
+		@for (int i = 0; i < Model.OptionList.Count; i++)
+		{
+			<div class="row my-2" id="@count">
+				<div class="col-sm-4">
+					@Html.TextBox("Title_" + count, Model.OptionList[i].Title, new { @class = " title form-control" })
+				</div>
+				<div class="col-sm-4">
+					@Html.TextBox("Details_" + count, Model.OptionList[i].Details, new { @class = "form-control" })
+				</div>
+				@if (Model.IsMultichoice != true)
+				{
+			<div class="col-sm-1">
+				@*new { @Value = (@i + 1), @class = " isCorrect form-control"}*@
+				@Html.RadioButton("IsCorrect_" + count, (@i + 1),Model.OptionList[i].IsCorrect,new {  @class = " isCorrect form-control"})
+			</div>
+				}
+				else
+				{
+					<div class="col-sm-1">
+						@Html.CheckBox("IsCorrect_" + count, Model.OptionList[i].IsCorrect, new { @Value = (@i + 1), @class = " isCorrect form-control" })
+					</div>
+				}
+				<div class="col-sm-2">
+					@Html.TextBox("OrderNo_" + count, Model.OptionList[i].OrderNo, new { @type = "number", @class = "form-control" })
+				</div>
+				<div class="col-sm-1">
+					<input type="button" value="Delete" id="delete_@(i+1)" class="btn btn-danger px-2 py-1" onclick="Delete(this)" />
+				</div>
+				@{count = count + 1;}
+			</div>
+		}
+	</div>
+
+	<div class="row d-flex justify-content-center mt-3">
+		<button type="button" id="submitBtn" class="btn btn-danger">Submit</button>
+	</div>
+}
+
+<script type="application/javascript">
+	var TotalOptionCount="@count";
+
+	$(function () {
+
+		radioBehaviour();
+
+		$("#addOption").click(function(event){
+			var rowText = '<div class="row my-2" id="TotalOptionCount"><div class="col-sm-4">@Html.TextBox("Title_" + "TotalOptionCount", "", new { @class = " title form-control" })</div><div class="col-sm-4">@Html.TextBox("Details_" + "TotalOptionCount", "", new { @class = "form-control" })</div>@if (Model.IsMultichoice != true){<div class="col-sm-1">@Html.RadioButton("IsCorrect_"+ "TotalOptionCount","TotalOptionCount" ,new {@class = " isCorrect form-control"})</div>}else{<div class="col-sm-1">@Html.CheckBox("IsCorrect_" + "TotalOptionCount", new {@Value = ("TotalOptionCount") , @class = " isCorrect form-control" })</div>}<div class="col-sm-2">@Html.TextBox("OrderNo_" + "TotalOptionCount", "", new { @class = "form-control" })</div><div class="col-sm-1"><input type="button" value="Delete" id = "delete_TotalOptionCount"class="btn btn-danger px-2 py-1" onclick="Delete(this)" /></div></div>'
+			rowText=rowText.replace(/TotalOptionCount/g,TotalOptionCount);
+			$("#optionContainer").append(rowText);
+			TotalOptionCount++;
+		Convert();
+		radioBehaviour();
+
+		});
+
+		$("#submitBtn").click(function(){
+			var divIds = [];
+			var optionCount = 0;
+
+			$("#optionContainer > div").each((index, elem) => {
+			  divIds.push(elem.id);
+				optionCount = optionCount+1;
+			});
+
+			Validation();
+			$("#OptionRowID").val(divIds.toString());
+
+			$("#formSubmit").submit();
+		});
+
+	});
+
+	function Convert(){
+		if($("#IsMultichoice").prop("checked") == true){
+			$(':radio').attr('type','checkbox')
+		}
+		else{
+			$(':checkbox').attr('type','radio')
+			$("#IsMultichoice").attr('type','checkbox')
+			$(':radio:checked:not(:first)').prop('checked', false);
+			radioBehaviour();
+		}
+	}
+
+	function radioBehaviour(){
+		$('input[type=radio]').change(function() {
+			// When any radio button on the page is selected,
+			// then deselect all other radio buttons.
+			$('input[type=radio]:checked').not(this).prop('checked', false);
+		});
+	}
+
+	function Delete(item){
+		var deleteID = $(item).attr("id");
+		$("#"+deleteID).parent().parent().remove();
+	}
+
+	function Validation(){
+		var checkCount = 0;
+		var queTitle = $("#Title").val().trim();
+		if(queTitle == "")
+		{
+			alert(" Question Title is Required.")
+			return false();
+		}
+
+		$(".title").each(function(){
+			var title = $(this).val().trim();
+			if(title == "" ){
+				alert("All Option's Title is Required. ");
+				return false();
+			}
+		});
+
+		$(".isCorrect").each(function(){
+			var check = $(this).prop("checked");
+			if(check == true){
+				checkCount = checkCount + 1;
+			}
+		});
+
+		if(checkCount == 0)
+		{
+			alert("Check at least one Checkbox / Radio button in Options.");
+			return false();
+		}
+	}
+</script>
+
+
+
